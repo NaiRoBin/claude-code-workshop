@@ -1,0 +1,29 @@
+# --- secrets / env (ห้ามขึ้น GitHub เด็ดขาด) ---
+.env
+.env.*
+*.env
+secrets*
+*.key
+*.pem
+id_ed25519
+id_rsa
+*.token
+ivanti*.json.local
+
+# public keys ผู้เรียน (วางเฉพาะตอน provision จริง)
+scripts/pubkeys/*.pub
+
+# --- node ---
+node_modules/
+npm-debug.log*
+
+# --- editor / OS ---
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# --- build output (สไลด์ที่ render แล้ว) ---
+slides/*.html
+slides/*.pdf
+slides/*.pptx

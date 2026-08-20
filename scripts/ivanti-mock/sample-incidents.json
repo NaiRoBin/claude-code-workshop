@@ -1,0 +1,12 @@
+[
+  { "id": 1001, "subject": "ล็อกอินเข้า VPN ไม่ได้", "status": "Open", "priority": "High", "created_at": "2026-08-10T09:12:00Z" },
+  { "id": 1002, "subject": "เครื่องพิมพ์ชั้น 3 ออฟไลน์", "status": "In Progress", "priority": "Medium", "created_at": "2026-08-11T13:45:00Z" },
+  { "id": 1003, "subject": "ขอสิทธิ์เข้าถึงโฟลเดอร์ฝ่ายบัญชี", "status": "Resolved", "priority": "Low", "created_at": "2026-08-11T15:02:00Z" },
+  { "id": 1004, "subject": "อีเมลส่งออกไม่ได้", "status": "Open", "priority": "High", "created_at": "2026-08-12T08:30:00Z" },
+  { "id": 1005, "subject": "ติดตั้งซอฟต์แวร์ใหม่บนเครื่องใหม่", "status": "In Progress", "priority": "Medium", "created_at": "2026-08-12T10:20:00Z" },
+  { "id": 1006, "subject": "รีเซ็ตรหัสผ่าน AD", "status": "Resolved", "priority": "Low", "created_at": "2026-08-12T11:05:00Z" },
+  { "id": 1007, "subject": "Wi-Fi ห้องประชุมช้ามาก", "status": "Open", "priority": "Medium", "created_at": "2026-08-13T09:00:00Z" },
+  { "id": 1008, "subject": "จอมอนิเตอร์ไม่แสดงภาพ", "status": "Closed", "priority": "Low", "created_at": "2026-08-13T14:40:00Z" },
+  { "id": 1009, "subject": "ระบบ ERP ล่มช่วงเช้า", "status": "In Progress", "priority": "Critical", "created_at": "2026-08-14T07:55:00Z" },
+  { "id": 1010, "subject": "ขอเพิ่มพื้นที่ไดรฟ์ร่วม", "status": "Open", "priority": "Low", "created_at": "2026-08-14T16:10:00Z" }
+]
