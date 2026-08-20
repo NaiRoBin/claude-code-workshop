@@ -23,7 +23,9 @@ npm-debug.log*
 .idea/
 *.swp
 
-# --- build output (สไลด์ที่ render แล้ว) ---
-slides/*.html
-slides/*.pdf
-slides/*.pptx
+# --- build output (สไลด์ที่ render จาก slides.md) ---
+slides/slides.html
+slides/slides.pdf
+# หมายเหตุ: infographic.html เป็นไฟล์ต้นฉบับ (track ไว้) ไม่ใช่ build output
+# slides.pptx: ถ้าต้องการแชร์ทีมผ่าน repo ให้ลบบรรทัดล่างนี้ออก
+slides/slides.pptx

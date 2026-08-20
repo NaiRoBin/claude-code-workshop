@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code Workshop — Infographic (1 วัน)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f2933; --muted:#6b7280; --line:#e5e7eb;
+    --brand:#d97757;            /* Claude coral */
+    --brand-d:#b85c3f;
+    --skill:#7c3aed; --usecase:#0ea5a4; --opt:#64748b; --basic:#2563eb;
+    --bg:#faf7f5; --card:#ffffff;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Sarabun',-apple-system,'Segoe UI',sans-serif;
+    color:var(--ink); background:var(--bg); line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  code,.mono{font-family:'JetBrains Mono',ui-monospace,Consolas,monospace}
+  .page{max-width:1000px; margin:0 auto; padding:24px}
+
+  /* header */
+  header{
+    background:linear-gradient(135deg,var(--brand),var(--brand-d));
+    color:#fff; border-radius:18px; padding:28px 32px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    box-shadow:0 10px 30px rgba(217,119,87,.25);
+  }
+  header h1{font-size:30px; font-weight:700; letter-spacing:.3px}
+  header p{opacity:.92; font-size:15px; margin-top:6px}
+  .badge{
+    background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.35);
+    padding:10px 16px; border-radius:12px; text-align:center; font-weight:700;
+    font-size:14px; white-space:nowrap;
+  }
+  .badge span{display:block; font-size:22px}
+
+  /* section titles */
+  h2.sec{
+    font-size:18px; margin:26px 0 12px; display:flex; align-items:center; gap:8px;
+    padding-bottom:6px; border-bottom:3px solid var(--line);
+  }
+  h2.sec .dot{width:12px;height:12px;border-radius:50%}
+
+  /* grid helpers */
+  .grid{display:grid; gap:14px}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:1fr 1fr}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px}
+
+  /* focus cards */
+  .focus{border-top:5px solid var(--basic); position:relative}
+  .focus h3{font-size:16px; margin-bottom:6px; display:flex; gap:8px; align-items:center}
+  .focus p{font-size:13.5px; color:var(--muted)}
+  .focus .tag{position:absolute; top:-11px; right:12px; font-size:11px; font-weight:700;
+    color:#fff; padding:3px 9px; border-radius:20px}
+  .main-tag{background:var(--usecase)} .opt-tag{background:var(--opt)} .base-tag{background:var(--basic)}
+
+  /* timeline */
+  .tl{position:relative; padding-left:26px}
+  .tl::before{content:''; position:absolute; left:9px; top:4px; bottom:4px; width:3px; background:var(--line)}
+  .tl-item{position:relative; margin-bottom:12px}
+  .tl-item::before{content:''; position:absolute; left:-21px; top:5px; width:13px; height:13px;
+    border-radius:50%; background:var(--brand); border:2px solid #fff; box-shadow:0 0 0 2px var(--brand)}
+  .tl-time{font-weight:700; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--brand-d)}
+  .tl-item.main .tl-time{color:var(--usecase)} .tl-item.main::before{background:var(--usecase); box-shadow:0 0 0 2px var(--usecase)}
+  .tl-item.opt .tl-time{color:var(--opt)} .tl-item.opt::before{background:var(--opt); box-shadow:0 0 0 2px var(--opt)}
+  .tl-item div.t{font-size:14px}
+  .pill{font-size:10.5px; font-weight:700; padding:1px 7px; border-radius:20px; color:#fff; margin-left:6px; vertical-align:middle}
+  .pill.m{background:var(--usecase)} .pill.o{background:var(--opt)}
+
+  /* architecture */
+  .arch{display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center;
+    background:#fff; border:1px dashed var(--brand); border-radius:14px; padding:20px}
+  .node{border:2px solid var(--line); border-radius:12px; padding:14px 16px; min-width:190px; background:#fff}
+  .node h4{font-size:14px; margin-bottom:6px}
+  .node ul{list-style:none; font-size:12.5px; color:var(--muted)}
+  .node.win{border-color:var(--basic)} .node.vm{border-color:var(--opt)}
+  .arrow{text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brand-d); font-weight:700}
+  .arrow b{display:block; font-size:20px; color:var(--brand)}
+
+  /* workflow */
+  .flow{display:flex; align-items:stretch; gap:0; flex-wrap:wrap}
+  .step{flex:1; min-width:120px; background:#fff; border:1px solid var(--line); border-radius:12px;
+    padding:12px; text-align:center; position:relative}
+  .step .n{width:24px;height:24px;border-radius:50%;background:var(--usecase);color:#fff;
+    font-weight:700; font-size:13px; display:inline-flex; align-items:center; justify-content:center; margin-bottom:6px}
+  .step h4{font-size:14px} .step p{font-size:11.5px; color:var(--muted)}
+  .step:not(:last-child)::after{content:'→'; position:absolute; right:-13px; top:50%; transform:translateY(-50%);
+    color:var(--brand); font-weight:700; font-size:20px; z-index:2}
+  .flow .step{margin-right:14px}
+
+  /* commands */
+  .cmds{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{background:#0f172a; color:#e2e8f0; font-family:'JetBrains Mono',monospace; font-size:12.5px;
+    padding:6px 11px; border-radius:8px}
+  .chip b{color:#fbbf24}
+  .install{background:#0f172a; color:#e2e8f0; border-radius:12px; padding:14px 16px; font-family:'JetBrains Mono',monospace;
+    font-size:12.5px; line-height:1.7; overflow-x:auto}
+  .install .c{color:#64748b} .install .k{color:#fbbf24}
+
+  /* security */
+  .sec-list{list-style:none; font-size:13.5px}
+  .sec-list li{padding:6px 0; display:flex; gap:8px; align-items:flex-start}
+
+  footer{margin-top:24px; text-align:center; color:var(--muted); font-size:12px}
+
+  @media print{
+    body{background:#fff} .page{padding:0}
+    header{box-shadow:none}
+    h2.sec{page-break-after:avoid}
+    .card,.step,.node{page-break-inside:avoid}
+  }
+  @media (max-width:760px){
+    .g4,.g3,.g2{grid-template-columns:1fr 1fr}
+    header{flex-direction:column; align-items:flex-start}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <h1>🤖 Claude Code Workshop</h1>
+      <p>เรียนใช้งานจริงใน 1 วัน · กลุ่มคละระดับ (dev / non-dev) ≤ 10 คน · เครื่อง Windows ไม่ต้องมี admin</p>
+    </div>
+    <div class="badge">เวลารวม<span>5 ชม.</span>10:00–12:00 · 13:30–16:30</div>
+  </header>
+
+  <!-- FOCUS -->
+  <h2 class="sec"><span class="dot" style="background:var(--brand)"></span>โฟกัสของวันนี้ · 4 เรื่อง</h2>
+  <div class="grid g4">
+    <div class="card focus" style="border-top-color:var(--basic)">
+      <span class="tag base-tag">พื้นฐาน</span>
+      <h3>⚙️ ติดตั้ง & พื้นฐาน</h3>
+      <p>ลง Claude Code บน Windows แบบ no-admin, สั่งงาน แก้ไฟล์ รันคำสั่ง git, plan mode</p>
+    </div>
+    <div class="card focus" style="border-top-color:var(--skill)">
+      <span class="tag main-tag">หลัก</span>
+      <h3>🧩 Skills</h3>
+      <p>ติดตั้ง skill จาก GitHub (mattpocock, karpathy), เรียกใช้ และสร้าง skill เอง</p>
+    </div>
+    <div class="card focus" style="border-top-color:var(--usecase)">
+      <span class="tag main-tag">หลัก</span>
+      <h3>🚀 Use case จริง</h3>
+      <p>"เราสร้าง workshop นี้ด้วย Claude Code อย่างไร" แล้วผู้เรียนทำ mini-project เอง</p>
+    </div>
+    <div class="card focus" style="border-top-color:var(--opt)">
+      <span class="tag opt-tag">optional</span>
+      <h3>🗄️ Capstone</h3>
+      <p>สั่ง Claude Code ข้าม SSH ไปคุม Linux VM: Postgres + Grafana + Ivanti</p>
+    </div>
+  </div>
+
+  <!-- TIMELINE + ARCH side by side -->
+  <div class="grid g2" style="margin-top:8px">
+    <div>
+      <h2 class="sec"><span class="dot" style="background:var(--brand)"></span>ตารางเวลา</h2>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-time">10:00</div><div class="t">บทนำ Claude Code + ค่าใช้จ่าย/ความปลอดภัย</div></div>
+        <div class="tl-item"><div class="tl-time">10:20</div><div class="t">ติดตั้งบน Windows (no-admin) + verify</div></div>
+        <div class="tl-item"><div class="tl-time">10:50</div><div class="t">พื้นฐาน: prompt · แก้ไฟล์ · permission · git</div></div>
+        <div class="tl-item"><div class="tl-time">11:35</div><div class="t">Plan mode & CLAUDE.md</div></div>
+        <div class="tl-item main"><div class="tl-time">13:30</div><div class="t">Skills — ติดตั้ง/ใช้/สร้าง<span class="pill m">หลัก</span></div></div>
+        <div class="tl-item main"><div class="tl-time">14:15</div><div class="t">Use case จริง + mini-project<span class="pill m">หลัก</span></div></div>
+        <div class="tl-item opt"><div class="tl-time">15:30</div><div class="t">Optional capstone (SSH → VM)<span class="pill o">optional</span></div></div>
+        <div class="tl-item"><div class="tl-time">16:15</div><div class="t">สรุป best practices + Q&amp;A</div></div>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec"><span class="dot" style="background:var(--opt)"></span>สถาปัตยกรรม</h2>
+      <div class="arch">
+        <div class="node win">
+          <h4>💻 Windows notebook <small>(no admin)</small></h4>
+          <ul>
+            <li>• Claude Code (native)</li>
+            <li>• ssh client</li>
+            <li>• browser</li>
+          </ul>
+        </div>
+        <div class="arrow"><b>⇄</b>SSH<br><span class="mono">ssh myvm "…"</span></div>
+        <div class="node vm">
+          <h4>🐧 Linux VM <small>(optional)</small></h4>
+          <ul>
+            <li>• PostgreSQL</li>
+            <li>• Grafana</li>
+            <li>• ข้อมูล Ivanti / mock</li>
+          </ul>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center">
+        Claude Code รันบน Windows เป็นหลัก · ช่วง capstone สั่งงานข้าม SSH ไปคุม VM<br>
+        <b>Fallback A:</b> ลง Windows ไม่ได้ → SSH เข้า VM แล้วรัน <span class="mono">claude</span> บน VM
+      </p>
+    </div>
+  </div>
+
+  <!-- USE CASE WORKFLOW -->
+  <h2 class="sec"><span class="dot" style="background:var(--usecase)"></span>Workflow ที่ใช้จริง (แกนของ use case)</h2>
+  <div class="flow">
+    <div class="step"><div class="n">1</div><h4>grill-me</h4><p>ซักสเปกจนชัด</p></div>
+    <div class="step"><div class="n">2</div><h4>plan mode</h4><p>ร่างแผนก่อนลงมือ</p></div>
+    <div class="step"><div class="n">3</div><h4>อนุมัติ</h4><p>ตรวจแผน → ExitPlanMode</p></div>
+    <div class="step"><div class="n">4</div><h4>generate</h4><p>ให้ Claude สร้างไฟล์</p></div>
+    <div class="step"><div class="n">5</div><h4>วนแก้</h4><p>feedback เป็นรอบ</p></div>
+  </div>
+
+  <!-- COMMANDS + INSTALL -->
+  <div class="grid g2" style="margin-top:8px">
+    <div>
+      <h2 class="sec"><span class="dot" style="background:var(--skill)"></span>คำสั่งที่ใช้บ่อย</h2>
+      <div class="cmds">
+        <span class="chip"><b>/help</b> ช่วยเหลือ</span>
+        <span class="chip"><b>/clear</b> ล้าง context</span>
+        <span class="chip"><b>/plan</b> วางแผน</span>
+        <span class="chip"><b>/reload-plugins</b> โหลด skill</span>
+        <span class="chip"><b>/grilling</b> ซักสเปก</span>
+        <span class="chip"><b>/tdd</b> test-first</span>
+        <span class="chip"><b>Esc</b> หยุด</span>
+      </div>
+      <div style="margin-top:12px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px">🧩 ติดตั้ง skill</div>
+        <div class="install">
+<span class="c"># clone + copy ไปที่ ~/.claude/skills/</span>
+git clone https://github.com/mattpocock/skills.git /tmp/mp
+cp -r /tmp/mp/skills/grilling <span class="k">~/.claude/skills/grilling</span>
+<span class="c"># แล้ว /reload-plugins → /grilling</span>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h2 class="sec"><span class="dot" style="background:var(--basic)"></span>ติดตั้งบน Windows · 3 ก้าว (no-admin)</h2>
+      <div class="install">
+<span class="c"># 1) Node ผ่าน fnm (user-level)</span>
+<span class="k">winget install</span> Schniz.fnm
+fnm install --lts ; fnm use lts-latest
+
+<span class="c"># 2) Claude Code</span>
+<span class="k">npm install -g</span> @anthropic-ai/claude-code
+
+<span class="c"># 3) API key (แล้วเปิด terminal ใหม่)</span>
+<span class="k">setx</span> ANTHROPIC_API_KEY "sk-ant-xxxx"
+
+<span class="c"># ✅ ตรวจ</span>
+claude --version
+      </div>
+    </div>
+  </div>
+
+  <!-- SECURITY -->
+  <h2 class="sec"><span class="dot" style="background:#dc2626"></span>ความปลอดภัย & ค่าใช้จ่าย</h2>
+  <div class="grid g3">
+    <div class="card"><ul class="sec-list">
+      <li>🔑 <span>ใช้ <code>ANTHROPIC_API_KEY</code> — อย่าแชร์ key</span></li>
+      <li>🚫 <span>อย่า commit secret ลง git → ใช้ env var</span></li>
+    </ul></div>
+    <div class="card"><ul class="sec-list">
+      <li>💰 <span>ตั้ง <b>spend limit</b> ใน Console — ระวังงานวน/ยาว</span></li>
+      <li>👀 <span>อ่าน diff / คำสั่ง ก่อนกด allow เสมอ</span></li>
+    </ul></div>
+    <div class="card"><ul class="sec-list">
+      <li>🔒 <span>ระวังคำสั่งบนเครื่องที่มี root (capstone)</span></li>
+      <li>🔌 <span>SSH ต้อง non-interactive: <span class="mono">StrictHostKeyChecking accept-new</span></span></li>
+    </ul></div>
+  </div>
+
+  <footer>
+    Claude Code Workshop · ชุดเตรียมสอน 1 วัน · เอกสารเต็ม: <code>README.md</code> · สไลด์: <code>slides/slides.md</code> · cheat sheet: <code>slides/cheatsheet.md</code>
+  </footer>
+
+</div>
+</body>
+</html>
