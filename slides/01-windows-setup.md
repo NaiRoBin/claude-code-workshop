@@ -93,26 +93,32 @@ npm -v
 
 ---
 
-## 2. ติดตั้ง Claude Code
+## 2. ติดตั้ง Claude Code (native install)
+
+วิธีที่ทางการแนะนำตอนนี้คือ **native install** (ไม่ใช่ผ่าน npm แล้ว) — ลงแบบ user-level ไม่ต้อง admin และอัปเดตตัวเองอัตโนมัติ
 
 ```powershell
-npm install -g @anthropic-ai/claude-code
+irm https://claude.ai/install.ps1 | iex
 ```
 
-> หมายเหตุผู้สอน: ยืนยันชื่อแพ็กเกจ/วิธีติดตั้งล่าสุด ณ วันอบรมอีกครั้ง (อาจมี native installer)
+> ถ้าเจอ error `'irm' is not recognized` แสดงว่าอยู่ใน CMD ไม่ใช่ PowerShell — ให้ใช้:
+> ```bat
+> curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+> ```
 >
-> ถ้า `npm i -g` ติดปัญหา permission ให้ตั้ง npm prefix เป็นโฟลเดอร์ใน user:
+> ทางเลือกอื่น (ไม่ auto-update, ต้องรัน `winget upgrade Anthropic.ClaudeCode` เองเป็นระยะ):
 > ```powershell
-> npm config set prefix "$env:USERPROFILE\.npm-global"
-> # แล้วเพิ่ม %USERPROFILE%\.npm-global ใน PATH ของ user
+> winget install Anthropic.ClaudeCode
 > ```
 
 <!--
-สำคัญมาก: ผู้สอนต้องเช็คก่อนวันอบรมจริงว่าชื่อแพ็กเกจและวิธีติดตั้งยังตรงกับปัจจุบันหรือไม่
-เพราะ Anthropic อาจเปลี่ยนไปใช้ native installer แทน npm ก็ได้
-ถ้ามีคน error เรื่อง permission ตอน npm install -g (มักเกิดจาก global prefix ชี้ไปที่
-โฟลเดอร์ที่ user เขียนไม่ได้) ให้ใช้ fallback ตั้ง npm prefix ใหม่เป็นโฟลเดอร์ใน user profile
-แล้วอย่าลืมเพิ่มโฟลเดอร์นั้นเข้า PATH ของ user ด้วย ไม่งั้น claude command จะหาไม่เจอ
+อ้างอิงจาก https://code.claude.com/docs/en/quickstart#native-install-recommended
+เปลี่ยนจาก npm install -g มาเป็น native installer ตามคำแนะนำล่าสุดของ Anthropic
+ข้อดี: ไม่ต้องพึ่ง Node/npm เลยสำหรับตัว Claude Code เอง, ไม่มีปัญหา npm global prefix/permission แบบเดิม,
+และตัว installer จะอัปเดต Claude Code ให้อัตโนมัติ (ต่างจาก winget ที่ต้อง upgrade เอง)
+ที่ยังให้ลง Node ผ่าน fnm ไว้ในขั้นตอนที่ 1 เพราะ lab capstone (05) ใช้ node รัน mock server ต่างหาก
+ไม่เกี่ยวกับการรัน Claude Code
+ถ้าเจอปัญหาแปลกๆกับ install script ให้ดู https://code.claude.com/docs/en/troubleshoot-install
 -->
 
 ---

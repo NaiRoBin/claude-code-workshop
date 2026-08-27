@@ -133,8 +133,8 @@ winget install Schniz.fnm
 fnm env --use-on-cd | Out-String | Invoke-Expression
 fnm install --lts ; fnm use lts-latest
 
-# 2) Claude Code
-npm install -g @anthropic-ai/claude-code
+# 2) Claude Code (native install — ไม่ต้อง admin, อัปเดตตัวเองอัตโนมัติ)
+irm https://claude.ai/install.ps1 | iex
 
 # 3) API key
 setx ANTHROPIC_API_KEY "sk-ant-xxxx"   # เปิด terminal ใหม่
@@ -142,7 +142,7 @@ setx ANTHROPIC_API_KEY "sk-ant-xxxx"   # เปิด terminal ใหม่
 
 <!--
 เดินช้า ๆ ตรงนี้ รอทุกคน. ถ้า winget ไม่มี → โหลด fnm.exe จาก releases.
-ถ้า npm -g ติด permission → ตั้ง prefix ใน user (ดู lab 01/99).
+ถ้า irm ไม่รู้จัก แสดงว่าอยู่ใน CMD ไม่ใช่ PowerShell → ใช้ install.cmd แทน (ดู lab 01).
 -->
 
 ---

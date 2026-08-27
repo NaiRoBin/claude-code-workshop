@@ -27,5 +27,5 @@ npm-debug.log*
 slides/slides.html
 slides/slides.pdf
 # หมายเหตุ: infographic.html เป็นไฟล์ต้นฉบับ (track ไว้) ไม่ใช่ build output
-# slides.pptx: ถ้าต้องการแชร์ทีมผ่าน repo ให้ลบบรรทัดล่างนี้ออก
-slides/slides.pptx
+# .pptx: ไม่ track (สร้างใหม่ได้ด้วย slides/build-pptx.sh) — ถ้าจะแชร์ทีมผ่าน repo ค่อยลบบรรทัดล่าง
+slides/*.pptx
