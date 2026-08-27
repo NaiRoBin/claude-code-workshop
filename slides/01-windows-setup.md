@@ -122,28 +122,55 @@ Claude Code จะสั่งงานข้าม ssh ไม่ได้เล
 
 ---
 
-## ขั้นตอน 1 — สร้าง SSH key
+## ก่อนเริ่ม: ขั้นตอนนี้มี 2 ฝั่งที่ต้องตรงกัน
 
-สร้าง key (ถ้ายังไม่มี):
+- **คุณ** สร้าง key แล้วส่ง public key ให้ผู้สอน
+- **ผู้สอน** เอา public key ไปติดตั้งบน VM แล้วส่ง IP/username ของ VM คุณกลับมา
+- ข้ามขั้นไหนไป → เจอ `Could not resolve hostname myvm` หรือ `Permission denied`
+
+<!-- เกริ่นภาพรวม handshake ก่อนลงรายละเอียดทีละขั้น กันคนสับสนว่าทำไมต้องรอผู้สอน -->
+
+---
+
+## ขั้นตอน 1 — สร้าง SSH key
 
 ```bash
 ssh-keygen -t ed25519 -C "workshop"
 ```
 
-ผู้สอนแจก host/user + ติดตั้ง public key บน VM ให้แล้ว
-(หรือทำตามที่ผู้สอนบอก)
+กด Enter ผ่านทุกคำถามได้เลย (ไม่ต้องตั้ง passphrase) จะได้ 2 ไฟล์ที่ `~/.ssh/`:
+- `id_ed25519` = **private key** ห้ามให้ใครดู/ส่งให้ใคร
+- `id_ed25519.pub` = **public key** อันนี้ส่งให้ผู้สอนได้ปลอดภัย
+
+<!-- ย้ำชัด ๆ ว่าไฟล์ไหนส่งได้ ไฟล์ไหนห้ามส่ง เป็นจุดที่ผู้เรียนสับสนบ่อย -->
+
+---
+
+## ขั้นตอน 2 — ส่ง public key ให้ผู้สอน
+
+```powershell
+type $env:USERPROFILE\.ssh\id_ed25519.pub
+```
+
+จะได้ข้อความ 1 บรรทัดขึ้นต้นด้วย `ssh-ed25519 AAAA...` — copy ทั้งบรรทัดส่งให้ผู้สอน
+ตามวิธีที่บอก (เช่น พิมพ์ในแชทกลุ่ม) แล้ว **รอผู้สอนติดตั้งให้บน VM**
+
+จากนั้นผู้สอนจะส่ง **VM_IP** และ **username** ของคุณกลับมา — จำไว้ใช้ในขั้นต่อไป
 
 <!--
-ผู้สอนควรเตรียม host/user/public key ไว้ล่วงหน้าให้แต่ละคนก่อน lab นี้เริ่ม
-(provision VM ล่วงหน้าด้วย scripts/provision-vm.sh)
+ผู้สอนควร provision VM ล่วงหน้าด้วย scripts/provision-vm.sh แต่ยังต้องรอ pubkey จริง
+จากผู้เรียนบางคนที่สร้าง key ตอนเช้า — เดินเก็บ/ติดตั้ง pubkey ให้ครบก่อนปล่อยไปขั้น 3
 -->
 
 ---
 
-## ขั้นตอน 2 — ตั้งค่า `~/.ssh/config`
+## ขั้นตอน 3 — ตั้งค่า `~/.ssh/config`
 
-ตั้ง `~/.ssh/config` ให้เรียกสั้น ๆ และไม่ถาม host key:
-
+เปิดไฟล์นี้ด้วย Notepad (ไฟล์นี้ไม่มีนามสกุล ไม่ใช่ `.txt`):
+```powershell
+notepad $env:USERPROFILE\.ssh\config
+```
+ถ้าถามว่าจะสร้างไฟล์ใหม่ไหม กด **Yes** แล้ววาง:
 ```
 Host myvm
     HostName <VM_IP>
@@ -152,17 +179,18 @@ Host myvm
     StrictHostKeyChecking accept-new
 ```
 
-- `Host myvm` ทำให้เรียก `ssh myvm` สั้น ๆ ได้ ไม่ต้องพิมพ์ IP/user ทุกครั้ง
-- `StrictHostKeyChecking accept-new` คือกันไม่ให้ถาม yes/no ตอน host key ใหม่
+**สำคัญ:** แทนที่ `<VM_IP>` และ `<student-user>` ด้วยค่าจริงจากขั้นที่ 2 แล้ว **save (Ctrl+S)**
 
 <!--
-อธิบายว่าทำไมต้องมีทั้งสองบรรทัดนี้ Host alias ช่วยให้ prompt สั่งงานสั้นและอ่านง่าย
-ส่วน StrictHostKeyChecking accept-new คือกุญแจสำคัญที่ทำให้ ssh ไม่ค้างถาม prompt
+จุดพลาดอันดับ 1 ของขั้นนี้: ปล่อย <VM_IP>/<student-user> เป็น placeholder ไว้เฉย ๆ
+ไม่ได้แทนที่ด้วยค่าจริง → ssh จะพยายาม resolve คำว่า "myvm" เป็น DNS name จริง ๆ
+เพราะไม่มี Host block ไหน match แล้วขึ้น Could not resolve hostname myvm
+เดินเช็คทีละคนว่า save ไฟล์เรียบร้อยแล้วก่อนไปขั้น 4
 -->
 
 ---
 
-## ขั้นตอน 3 — ทดสอบ SSH
+## ขั้นตอน 4 — ทดสอบ SSH
 
 ```bash
 ssh myvm "uname -a"      # ต้องได้ผลลัพธ์ทันที ไม่ถาม yes/no ไม่ถามรหัส
@@ -170,12 +198,13 @@ ssh myvm "uname -a"      # ต้องได้ผลลัพธ์ทัน�
 
 ถ้าได้ผลลัพธ์ทันที ไม่มี prompt ใด ๆ = ตั้งค่าสำเร็จ
 
-> ⚠️ ถ้ายังเจอ prompt ถามรหัสผ่าน หรือค้างรอ yes/no ให้แก้ก่อนไปต่อ
-> ห้ามข้ามไปขั้นถัดไปทั้งที่ ssh ยังไม่ non-interactive
+> ⚠️ `Could not resolve hostname myvm` → กลับไปขั้นที่ 3 เช็คว่า save ค่าจริงแล้วหรือยัง
+> ⚠️ ถ้ายังเจอ prompt ถามรหัสผ่าน หรือค้างรอ yes/no ให้แก้ก่อนไปต่อ ห้ามข้ามไปขั้นถัดไป
 
 <!--
 ให้ผู้เรียนรันคำสั่งนี้จริง ๆ ต่อหน้า แล้วสังเกตว่าไม่มี prompt ใด ๆ โผล่มา
-ถ้ายังมี prompt ให้ตรวจ ~/.ssh/config และ public key ที่ผู้สอนติดตั้งไว้บน VM
+สองอาการหลักที่จะเจอ: (1) resolve hostname ไม่ได้ = config ยังไม่ถูก (2) ค้างรอ prompt
+= public key ยังไม่ถูกติดตั้งบน VM หรือ StrictHostKeyChecking ยังไม่ตั้ง — แยกสองเคสนี้ให้ชัด
 -->
 
 ---

@@ -16,9 +16,17 @@ curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del in
 ## 2) ต่อ SSH ไป VM
 ```powershell
 ssh-keygen -t ed25519 -C "workshop"
-# ผู้สอนแจก host/user + ติดตั้ง public key บน VM ให้แล้ว
 ```
-ตั้ง `~/.ssh/config`:
+ส่ง public key ให้ผู้สอน (ไม่ใช่ private key):
+```powershell
+type $env:USERPROFILE\.ssh\id_ed25519.pub
+```
+รอผู้สอนติดตั้งบน VM แล้วส่ง VM_IP/username กลับมา จากนั้นแก้ไฟล์:
+```powershell
+notepad $env:USERPROFILE\.ssh\config
+```
+วางแล้ว**แทนที่ `<VM_IP>`/`<student-user>` ด้วยค่าจริง** (ปล่อย placeholder ไว้จะ error
+`Could not resolve hostname myvm`):
 ```
 Host myvm
     HostName <VM_IP>

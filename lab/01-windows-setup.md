@@ -41,28 +41,59 @@ claude --version
 ## 2. ต่อ SSH ไป VM ให้ non-interactive (สำคัญมาก)
 
 ตั้งแต่ lab 02 เป็นต้นไป Claude Code (ที่รันอยู่บน Windows) จะสั่งงานผ่าน `ssh myvm "<คำสั่ง>"`
-ไปทำงานบน VM ที่ผู้สอนเตรียมไว้ ดังนั้น ssh **ต้องไม่ค้างรอ prompt**
+ไปทำงานบน VM ที่ผู้สอนเตรียมไว้ ดังนั้น ssh **ต้องไม่ค้างรอ prompt** ขั้นตอนนี้มี 2 ฝั่งที่ต้อง
+ตรงกัน — **คุณ** สร้าง key แล้วส่ง public key ให้ผู้สอน, **ผู้สอน** เอา public key ไปติดตั้งบน VM
+แล้วส่ง IP/username ของ VM คุณกลับมา ถ้าข้ามขั้นไหนไปจะเจอ error `Could not resolve hostname myvm`
+หรือ `Permission denied` ตอนทดสอบ
 
-1. สร้าง key (ถ้ายังไม่มี):
-   ```bash
-   ssh-keygen -t ed25519 -C "workshop"
-   ```
-2. ผู้สอนแจก host/user + ติดตั้ง public key บน VM ให้แล้ว (หรือทำตามที่ผู้สอนบอก)
-3. ตั้ง `~/.ssh/config` ให้เรียกสั้น ๆ และไม่ถาม host key:
-   ```
-   Host myvm
-       HostName <VM_IP>
-       User <student-user>
-       IdentityFile ~/.ssh/id_ed25519
-       StrictHostKeyChecking accept-new
-   ```
-4. ทดสอบ:
-   ```bash
-   ssh myvm "uname -a"      # ต้องได้ผลลัพธ์ทันที ไม่ถาม yes/no ไม่ถามรหัส
-   ```
+**ขั้นที่ 1 — สร้าง SSH key (ถ้ายังไม่มี)**
+```bash
+ssh-keygen -t ed25519 -C "workshop"
+```
+กด Enter รัวๆ ผ่านทุกคำถามได้เลย (ไม่ต้องตั้ง passphrase) จะได้ไฟล์ 2 ไฟล์ที่ `~/.ssh/`:
+`id_ed25519` (**private key** — ห้ามให้ใครดู/ส่งให้ใคร) และ `id_ed25519.pub` (**public key**
+— อันนี้ส่งให้ผู้สอนได้ปลอดภัย)
+
+**ขั้นที่ 2 — เอา public key ไปส่งให้ผู้สอน**
+```powershell
+type $env:USERPROFILE\.ssh\id_ed25519.pub
+```
+จะได้ข้อความยาว 1 บรรทัด ขึ้นต้นด้วย `ssh-ed25519 AAAA...` — copy ทั้งบรรทัดส่งให้ผู้สอน
+ตามวิธีที่ผู้สอนบอก (เช่น พิมพ์ในแชทกลุ่มของคลาส) แล้ว**รอผู้สอนติดตั้งให้บน VM**
+
+**ขั้นที่ 3 — รับ VM_IP กับ username ของคุณจากผู้สอน**
+ผู้สอนจะส่งกลับมา 2 ค่า เช่น `VM_IP = 13.212.xx.xx` และ `username = student07` — จำไว้ใช้ในขั้นต่อไป
+
+**ขั้นที่ 4 — สร้าง/แก้ไฟล์ `~/.ssh/config`**
+เปิดไฟล์นี้ด้วย Notepad (ไฟล์นี้ไม่มีนามสกุล ไม่ใช่ `.txt`):
+```powershell
+notepad $env:USERPROFILE\.ssh\config
+```
+ถ้า Notepad ถามว่าจะสร้างไฟล์ใหม่ไหม ให้กด **Yes** — แล้ววางข้อความนี้ลงไป:
+```
+Host myvm
+    HostName <VM_IP>
+    User <student-user>
+    IdentityFile ~/.ssh/id_ed25519
+    StrictHostKeyChecking accept-new
+```
+**สำคัญ:** ต้องแทนที่ `<VM_IP>` และ `<student-user>` ด้วยค่าจริงจากขั้นที่ 3 (เช่น
+`HostName 13.212.xx.xx` และ `User student07`) — ถ้าปล่อยเป็น `<VM_IP>`/`<student-user>`
+แบบ placeholder ไว้เฉย ๆ, ssh จะพยายามหา host ชื่อ `myvm` ทาง DNS จริง ๆ (เพราะไม่มี
+`Host myvm` ที่ match) แล้วขึ้น error `Could not resolve hostname myvm` — เช็คให้ดีว่า
+save ไฟล์แล้ว (Ctrl+S) และปิด Notepad
+
+**ขั้นที่ 5 — ทดสอบ**
+```bash
+ssh myvm "uname -a"      # ต้องได้ผลลัพธ์ทันที ไม่ถาม yes/no ไม่ถามรหัส
+```
 
 ### ✅ Checkpoint 2
 `ssh myvm "hostname"` ทำงานได้แบบไม่ถามอะไรเลย = พร้อมให้ Claude Code สั่งข้าม SSH ใน lab ถัดไป
+
+> ถ้าเจอ `Could not resolve hostname myvm` → ไม่มี `Host myvm` ใน config จริง (ไฟล์ไม่มี/
+> พิมพ์ผิด/ยังเป็น placeholder) กลับไปขั้นที่ 4 ใหม่ — ดูรายละเอียดเพิ่มที่
+> [`99-troubleshooting.md`](99-troubleshooting.md)
 
 > 💡 fallback A: ถ้าใครลง Claude Code บน Windows ไม่ได้ (Checkpoint 1 ไม่ผ่าน) → `ssh myvm`
 > เข้าไป แล้วลง Claude Code (native install แบบเดียวกัน แต่รันบน VM) แล้วรัน `claude`

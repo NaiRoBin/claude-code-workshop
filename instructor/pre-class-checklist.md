@@ -14,6 +14,8 @@
   — ถ้า provision บน cloud (เช่น AWS EC2) ใช้ `scripts/aws-user-data.sh` เป็น user-data ตอน
     launch แต่ละเครื่องได้เลย (แก้ `STUDENT_USER`/`STUDENT_PUBKEY` ก่อนวาง ไม่ต้อง ssh เข้าไปรันมือ)
 - [ ] วาง public key ผู้เรียนใน `scripts/pubkeys/<user>.pub` ก่อนรัน provision (หรือให้ผู้เรียนสร้าง key ตอนเช้าแล้วใส่ทีหลัง)
+  — ถ้าใช้แบบหลัง: เตรียมช่องทางรับ pubkey หน้างาน (เช่นแชทกลุ่ม) แล้ว provision +
+    ส่ง VM_IP/username กลับให้ทันช่วง lab 01 ขั้นตอน SSH (ผู้เรียนรอ 2 ค่านี้ก่อนตั้ง `~/.ssh/config` ได้)
 - [ ] รัน `scripts/verify-vm.sh` บนแต่ละ VM → ผ่านทุกข้อ (รวม sample-project + servicedesk-mock ที่ provision ไว้)
 - [ ] ทดสอบ `ssh myvm "uname -a"` แบบ non-interactive (ไม่ถาม host key/รหัส)
 - [ ] ยืนยัน **ServiceDesk Plus** endpoint + token ใช้ได้ (เตรียมเป็น env var, ไม่ commit)

@@ -24,7 +24,9 @@ Capstone (ServiceDesk Plus/DB/Grafana) เป็น **ส่วนหนึ่�
 | ติดตั้ง Windows | native install ล้มเหลว | ลองใหม่/เช็คเน็ต; ถ้าไม่ได้ → **fallback A** (รัน claude บน VM) |
 | API key | auth error | ตรวจ `setx` แล้วเปิด terminal ใหม่; เตรียม key สำรอง |
 | Skills ไม่โผล่ | ลืม reload | `/reload-plugins` หรือเปิด `claude` ใหม่ |
+| SSH (ตั้งแต่ lab01) | `Could not resolve hostname myvm` | ผู้เรียนยังไม่แทน `<VM_IP>`/`<student-user>` ใน `~/.ssh/config` ด้วยค่าจริง (ยัง placeholder อยู่) |
 | SSH (ตั้งแต่ lab01) | ค้างรอ prompt | `StrictHostKeyChecking accept-new` + key-based; เตรียม `~/.ssh/config` ให้พร้อม |
+| SSH (ตั้งแต่ lab01) | `Permission denied (publickey)` | pubkey ของผู้เรียนคนนี้ยังไม่ถูกใส่ใน `authorized_keys` บน VM — มักเกิดกับคนที่สร้าง key ตอนเช้าแทนที่จะส่งมาก่อนวันจริง ต้องรับ pubkey แล้ว provision ให้ทันช่วง lab 01 |
 | ServiceDesk Plus | ล่ม/ช้า | สลับ mock (`scripts/servicedesk-mock/`) ทันที |
 | เปิด Grafana ไม่ได้ | security group ยังไม่เปิด inbound 3000 | เช็ค security group ของ VM (ต้องเปิด TCP 22 + 3000) |
 
