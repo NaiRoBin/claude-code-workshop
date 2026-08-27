@@ -81,7 +81,7 @@
   .node{border:2px solid var(--line); border-radius:12px; padding:14px 16px; min-width:190px; background:#fff}
   .node h4{font-size:14px; margin-bottom:6px}
   .node ul{list-style:none; font-size:12.5px; color:var(--muted)}
-  .node.win{border-color:var(--basic)} .node.vm{border-color:var(--opt)}
+  .node.win{border-color:var(--basic)} .node.vm{border-color:var(--basic)}
   .arrow{text-align:center; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--brand-d); font-weight:700}
   .arrow b{display:block; font-size:20px; color:var(--brand)}
 
@@ -152,10 +152,10 @@
       <h3>🚀 Use case จริง</h3>
       <p>"เราสร้าง workshop นี้ด้วย Claude Code อย่างไร" แล้วผู้เรียนทำ mini-project เอง</p>
     </div>
-    <div class="card focus" style="border-top-color:var(--opt)">
-      <span class="tag opt-tag">optional</span>
+    <div class="card focus" style="border-top-color:var(--usecase)">
+      <span class="tag main-tag">หลัก</span>
       <h3>🗄️ Capstone</h3>
-      <p>สั่ง Claude Code ข้าม SSH ไปคุม Linux VM: Postgres + Grafana + Ivanti</p>
+      <p>สั่ง Claude Code ข้าม SSH ไปคุม Linux VM ตัวเดิม: Postgres + Grafana + ServiceDesk Plus</p>
     </div>
   </div>
 
@@ -165,12 +165,12 @@
       <h2 class="sec"><span class="dot" style="background:var(--brand)"></span>ตารางเวลา</h2>
       <div class="tl">
         <div class="tl-item"><div class="tl-time">10:00</div><div class="t">บทนำ Claude Code + ค่าใช้จ่าย/ความปลอดภัย</div></div>
-        <div class="tl-item"><div class="tl-time">10:20</div><div class="t">ติดตั้งบน Windows (no-admin) + verify</div></div>
-        <div class="tl-item"><div class="tl-time">10:50</div><div class="t">พื้นฐาน: prompt · แก้ไฟล์ · permission · git</div></div>
+        <div class="tl-item"><div class="tl-time">10:20</div><div class="t">ติดตั้งบน Windows (no-admin) + ต่อ SSH เข้า VM + verify</div></div>
+        <div class="tl-item"><div class="tl-time">10:50</div><div class="t">พื้นฐาน (บน VM ผ่าน SSH): prompt · แก้ไฟล์ · permission · git</div></div>
         <div class="tl-item"><div class="tl-time">11:35</div><div class="t">Plan mode & CLAUDE.md</div></div>
         <div class="tl-item main"><div class="tl-time">13:30</div><div class="t">Skills — ติดตั้ง/ใช้/สร้าง<span class="pill m">หลัก</span></div></div>
-        <div class="tl-item main"><div class="tl-time">14:15</div><div class="t">Use case จริง + mini-project<span class="pill m">หลัก</span></div></div>
-        <div class="tl-item opt"><div class="tl-time">15:30</div><div class="t">Optional capstone (SSH → VM)<span class="pill o">optional</span></div></div>
+        <div class="tl-item main"><div class="tl-time">14:15</div><div class="t">Use case จริง + mini-project (บน VM)<span class="pill m">หลัก</span></div></div>
+        <div class="tl-item main"><div class="tl-time">15:30</div><div class="t">Capstone: Postgres/Grafana/ServiceDesk Plus (VM ตัวเดิม)<span class="pill m">หลัก</span></div></div>
         <div class="tl-item"><div class="tl-time">16:15</div><div class="t">สรุป best practices + Q&amp;A</div></div>
       </div>
     </div>
@@ -187,16 +187,16 @@
         </div>
         <div class="arrow"><b>⇄</b>SSH<br><span class="mono">ssh myvm "…"</span></div>
         <div class="node vm">
-          <h4>🐧 Linux VM <small>(optional)</small></h4>
+          <h4>🐧 Linux VM <small>(ตั้งแต่ lab 02)</small></h4>
           <ul>
-            <li>• PostgreSQL</li>
-            <li>• Grafana</li>
-            <li>• ข้อมูล Ivanti / mock</li>
+            <li>• sample-project / mini-project</li>
+            <li>• PostgreSQL + Grafana</li>
+            <li>• ServiceDesk Plus / mock</li>
           </ul>
         </div>
       </div>
       <p style="font-size:12px;color:var(--muted);margin-top:8px;text-align:center">
-        Claude Code รันบน Windows เป็นหลัก · ช่วง capstone สั่งงานข้าม SSH ไปคุม VM<br>
+        Claude Code รันบน Windows เป็นหลัก · ตั้งแต่ lab 02 สั่งงานข้าม SSH ไปทำงานบน VM<br>
         <b>Fallback A:</b> ลง Windows ไม่ได้ → SSH เข้า VM แล้วรัน <span class="mono">claude</span> บน VM
       </p>
     </div>
@@ -275,12 +275,12 @@ cp -r /tmp/mp/skills/grilling <span class="k">~/.claude/skills/grilling</span>
     <div>
       <h2 class="sec"><span class="dot" style="background:var(--basic)"></span>ติดตั้งบน Windows · 3 ก้าว (no-admin)</h2>
       <div class="install">
-<span class="c"># 1) Node ผ่าน fnm (user-level)</span>
-<span class="k">winget install</span> Schniz.fnm
-fnm install --lts ; fnm use lts-latest
-
-<span class="c"># 2) Claude Code (native install)</span>
+<span class="c"># 1) Claude Code (native install — ไม่ต้องมี Node/npm)</span>
 <span class="k">irm</span> https://claude.ai/install.ps1 <span class="k">| iex</span>
+
+<span class="c"># 2) ต่อ SSH ไป VM (ใช้ตั้งแต่ lab 02)</span>
+<span class="k">ssh-keygen</span> -t ed25519 -C "workshop"
+ssh myvm "uname -a"
 
 <span class="c"># 3) API key (แล้วเปิด terminal ใหม่)</span>
 <span class="k">setx</span> ANTHROPIC_API_KEY "sk-ant-xxxx"
@@ -303,7 +303,7 @@ claude --version
       <li>👀 <span>อ่าน diff / คำสั่ง ก่อนกด allow เสมอ</span></li>
     </ul></div>
     <div class="card"><ul class="sec-list">
-      <li>🔒 <span>ระวังคำสั่งบนเครื่องที่มี root (capstone)</span></li>
+      <li>🔒 <span>ระวังคำสั่งบนเครื่องที่มี root (VM)</span></li>
       <li>🔌 <span>SSH ต้อง non-interactive: <span class="mono">StrictHostKeyChecking accept-new</span></span></li>
     </ul></div>
   </div>

@@ -29,15 +29,16 @@ theme: default
 
 ## สิ่งที่ได้เรียนวันนี้ (1/2) — พื้นฐาน
 
-- ติดตั้ง & ใช้ Claude Code บน Windows (**ไม่ต้องมี admin**)
-- พื้นฐาน: prompting, แก้ไฟล์, รันคำสั่ง, permission, git, **plan mode**
-- **Skills**: ติดตั้งจาก GitHub + สร้างเอง
+- ติดตั้ง & ใช้ Claude Code บน Windows (**ไม่ต้องมี admin**) + ต่อ SSH เข้า VM
+- พื้นฐาน: prompting, แก้ไฟล์, รันคำสั่ง, permission, git, **plan mode** (บน VM ผ่าน SSH)
+- **Skills**: ติดตั้งจาก GitHub + สร้างเอง (บน Windows notebook)
 
 <!--
 เน้นย้ำว่า Windows ไม่ต้องมี admin ก็ติดตั้งได้ — สำคัญสำหรับผู้เรียนที่เครื่ององค์กรจำกัดสิทธิ์
 พื้นฐาน 6 เรื่องนี้คือแกนของทั้ง workshop: prompting, แก้ไฟล์, รันคำสั่ง,
 permission (การอนุมัติก่อนรัน), git (commit เป็นรอบ), และ plan mode (วางแผนก่อนลงมือ)
-Skills: ทั้งติดตั้งจาก GitHub ของคนอื่น และสร้าง skill ของตัวเอง
+— ทั้งหมดนี้ทำงานบน VM ผ่าน ssh myvm ตั้งแต่ lab 02
+Skills: ทั้งติดตั้งจาก GitHub ของคนอื่น และสร้าง skill ของตัวเอง (อันนี้ยังทำบน laptop เหมือนเดิม)
 -->
 
 ---
@@ -45,14 +46,16 @@ Skills: ทั้งติดตั้งจาก GitHub ของคนอื�
 ## สิ่งที่ได้เรียนวันนี้ (2/2) — การใช้งานจริง
 
 - **Use case จริง**: ใช้ Claude Code สร้างโปรเจกต์ผ่าน
-  `grill-me → plan → generate`
-- (Optional) ให้ Claude Code สั่งงานข้าม SSH ไปติดตั้ง DB/Grafana + ดึง Ivanti
+  `grill-me → plan → generate` (บน VM)
+- **Capstone**: ให้ Claude Code สั่งงานข้าม SSH ไปติดตั้ง DB/Grafana + ดึง ServiceDesk Plus
+  บน VM ตัวเดิม
 
 <!--
 Use case จริง: flow การทำงานที่แนะนำคือ grill-me (ให้ Claude ซักถามความต้องการ) 
 → plan (วางแผนก่อนแก้/สร้างโค้ด) → generate (ลงมือทำ)
-ส่วน optional lab (SSH ไปเครื่องอื่น ติดตั้ง DB/Grafana และดึงข้อมูลจาก Ivanti)
-เป็นตัวอย่างว่า Claude Code ใช้ควบคุมงาน infra ข้ามเครื่องได้ด้วย
+ส่วน capstone (SSH ไป VM ตัวเดิม ติดตั้ง DB/Grafana และดึงข้อมูลจาก ServiceDesk Plus)
+ไม่ใช่ lab เสริมแล้ว เป็นส่วนหนึ่งของ flow หลัก แสดงว่า Claude Code ใช้ควบคุมงาน infra
+ข้ามเครื่องได้ด้วย
 -->
 
 ---

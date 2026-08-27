@@ -46,10 +46,10 @@ class: lead
 3. พื้นฐาน: สั่งงาน แก้ไฟล์ รันคำสั่ง git
 4. Plan mode
 
-**บ่าย (แกนหลัก + เสริม)**
+**บ่าย (แกนหลักทั้งหมด)**
 5. **Skills** — ติดตั้งจาก GitHub + สร้างเอง
-6. **Use case จริง** — สร้างโปรเจกต์ด้วย Claude Code
-7. (Optional) สั่ง Claude Code ข้าม SSH ไปคุม Linux VM
+6. **Use case จริง** — สร้างโปรเจกต์ด้วย Claude Code (บน VM)
+7. **Capstone** — สั่ง Claude Code ข้าม SSH ไปคุม Linux VM ตัวเดิม (Postgres/Grafana/ServiceDesk Plus)
 8. สรุป & best practices
 
 ---
@@ -90,18 +90,18 @@ class: lead
 ## สถาปัตยกรรมของแลปวันนี้
 
 ```
-Windows notebook (no admin)            Linux VM (optional)
-  • Claude Code (native)   ──SSH──►      • PostgreSQL
-  • ssh client                            • Grafana
-  • browser ◄──── ssh -L 3000 ────       • ข้อมูล Ivanti
+Windows notebook (no admin)            Linux VM (workspace ตั้งแต่ lab 02)
+  • Claude Code (native)   ──SSH──►      • sample-project / mini-project
+  • ssh client                            • PostgreSQL / Grafana
+  • browser ◄──── ssh -L 3000 ────       • ServiceDesk Plus หรือ mock
 ```
 
-- Claude Code รัน **บน Windows** เป็นหลัก (ไม่ต้องมี admin)
-- ช่วง capstone: Claude Code **สั่งงานข้าม SSH** ไปคุม VM
+- Claude Code รัน **บน Windows** เป็นหลัก (ไม่ต้องมี admin, ไม่ต้องมี Node/npm)
+- ตั้งแต่ lab 02 เป็นต้นไป: Claude Code **สั่งงานข้าม SSH** ไปทำงานจริงบน VM ตัวเดิม
 
 <!--
 อธิบายว่าทำไมไม่ใช้ WSL: เครื่องไม่มี admin → เปิด WSL ไม่ได้ → WSL อยู่ในเอกสาร self-study.
-capstone เป็น optional สำหรับคนอยากลงลึก.
+VM ไม่ใช่ของแถมเฉพาะ capstone อีกต่อไป — ใช้ต่อเนื่องตั้งแต่ lab 02 ถึง lab 05.
 -->
 
 ---
@@ -128,21 +128,21 @@ capstone เป็น optional สำหรับคนอยากลงลึ�
 ## ขั้นตอนติดตั้ง (3 ก้าว)
 
 ```powershell
-# 1) Node.js ผ่าน fnm (user-level ไม่ต้อง admin)
-winget install Schniz.fnm
-fnm env --use-on-cd | Out-String | Invoke-Expression
-fnm install --lts ; fnm use lts-latest
-
-# 2) Claude Code (native install — ไม่ต้อง admin, อัปเดตตัวเองอัตโนมัติ)
+# 1) Claude Code (native install — ไม่ต้อง admin, ไม่ต้องมี Node/npm, อัปเดตตัวเองอัตโนมัติ)
 irm https://claude.ai/install.ps1 | iex
+
+# 2) ต่อ SSH ไป VM ให้ non-interactive (ใช้ตั้งแต่ lab 02)
+ssh-keygen -t ed25519 -C "workshop"
+# ตั้ง ~/.ssh/config ให้มี Host myvm ... StrictHostKeyChecking accept-new
+ssh myvm "uname -a"      # ต้องได้ผลทันที ไม่ถาม yes/no ไม่ถามรหัส
 
 # 3) API key
 setx ANTHROPIC_API_KEY "sk-ant-xxxx"   # เปิด terminal ใหม่
 ```
 
 <!--
-เดินช้า ๆ ตรงนี้ รอทุกคน. ถ้า winget ไม่มี → โหลด fnm.exe จาก releases.
-ถ้า irm ไม่รู้จัก แสดงว่าอยู่ใน CMD ไม่ใช่ PowerShell → ใช้ install.cmd แทน (ดู lab 01).
+เดินช้า ๆ ตรงนี้ รอทุกคน. ถ้า irm ไม่รู้จัก แสดงว่าอยู่ใน CMD ไม่ใช่ PowerShell → ใช้ install.cmd แทน (ดู lab 01).
+SSH ต้อง non-interactive จริง ๆ เพราะ lab 02 เป็นต้นไปทุก lab สั่งงานผ่าน ssh myvm ทั้งหมด
 -->
 
 ---
@@ -150,23 +150,24 @@ setx ANTHROPIC_API_KEY "sk-ant-xxxx"   # เปิด terminal ใหม่
 ## ✅ Checkpoint: ติดตั้งสำเร็จ
 
 ```powershell
-node -v          # เห็นเวอร์ชัน LTS
-claude --version # เห็นเวอร์ชัน Claude Code
+claude --version           # เห็นเวอร์ชัน Claude Code
+ssh myvm "hostname"        # ไม่ถามอะไรเลย
 
 mkdir hello-claude; cd hello-claude; claude
 # แล้วพิมพ์: สร้างไฟล์ hello.txt ที่มีข้อความ "สวัสดี Claude Code"
 ```
 
-> ⚠️ ลงไม่ได้จริง ๆ? → **Fallback A**: เดี๋ยวช่วง capstone ใช้ SSH เข้า VM แล้วรัน `claude` บน VM แทน
+> ⚠️ ลง Claude Code บน Windows ไม่ได้จริง ๆ? → **Fallback A**: ssh เข้า VM แล้วลง Claude Code
+> (native install แบบเดียวกัน) บน VM แทน จากนั้นรัน `claude` บน VM ทำ lab ที่เหลือทั้งวัน
 
-<!-- คนที่ติดปัญหา จดชื่อไว้ จับกลุ่มช่วยตอนพัก / ใช้ fallback A ตอนบ่าย -->
+<!-- คนที่ติดปัญหา จดชื่อไว้ จับกลุ่มช่วยตอนพัก / ใช้ fallback A ได้ทันทีตั้งแต่ตอนนี้ -->
 
 ---
 
 <!-- _class: lead -->
 # 3. พื้นฐาน Claude Code
 
-📄 `lab/02-claude-code-basics.md` · โปรเจกต์ `sample-project/`
+📄 `lab/02-claude-code-basics.md` · โปรเจกต์ `sample-project/` (provision ไว้บน VM แล้ว, ทำงานผ่าน `ssh myvm "..."`)
 
 ---
 
@@ -183,7 +184,7 @@ mkdir hello-claude; cd hello-claude; claude
 git init แล้ว commit งานปัจจุบัน
 ```
 
-<!-- ให้ทุกคนลงมือทำจริงบน sample-project. เดินดูรอบ ๆ ห้อง -->
+<!-- ให้ทุกคนลงมือทำจริงบน sample-project (บน VM ผ่าน ssh myvm). เดินดูรอบ ๆ ห้อง -->
 
 ---
 
@@ -326,29 +327,30 @@ grill-me จับข้อขัดแย้งได้ตั้งแต่�
 - **C:** เขียน skill ช่วยงานประจำของคุณ
 
 ```
-mkdir my-mini; cd my-mini; claude
+claude   (เปิดบน Windows ตามเดิม บอก Claude ว่าทำงานผ่าน ssh myvm)
+ssh myvm "mkdir -p ~/my-mini"
 /grilling <โจทย์ของคุณ>
-→ plan → อนุมัติ → สร้าง → /commit-msg
+→ plan → อนุมัติ → สร้าง (บน ~/my-mini ใน VM) → /commit-msg
 ```
 
-<!-- ปล่อยลงมือ. เดินช่วย. ใครเสร็จเร็วให้ต่อยอด หรือไปทำ capstone -->
+<!-- ปล่อยลงมือ. เดินช่วย. ใครเสร็จเร็วให้ต่อยอด mini-project ต่อระหว่างรอเพื่อน แล้วไปทำ capstone พร้อมกัน -->
 
 ---
 
 <!-- _class: lead -->
-# 6. (Optional) Capstone
-## Claude Code สั่งงานข้าม SSH ไปคุม VM
+# 6. Capstone
+## Claude Code สั่งงานข้าม SSH ไปคุม VM ตัวเดิม
 
-📄 `lab/05-capstone-optional.md`
+📄 `lab/05-capstone.md`
 
 ---
 
 ## โจทย์ capstone
 
-ให้ **Claude Code (บน Windows)** สั่งงานข้าม SSH ไปที่ VM เพื่อ:
+ให้ **Claude Code (บน Windows)** สั่งงานข้าม SSH ไปที่ VM ตัวเดิมที่ใช้มาตั้งแต่ lab 02 เพื่อ:
 
-1. ติดตั้ง **PostgreSQL** + สร้างตาราง `incidents`
-2. ดึงข้อมูลจาก **Ivanti** (หรือ mock) → โหลดเข้า DB
+1. ติดตั้ง **PostgreSQL** + สร้างตาราง `requests`
+2. ดึงข้อมูลจาก **ServiceDesk Plus** (หรือ mock) → โหลดเข้า DB
 3. ติดตั้ง **Grafana** + สร้าง dashboard
 4. เปิดดูผ่าน `ssh -L 3000` บน browser
 
@@ -378,18 +380,18 @@ Host myvm
 
 ```
 เราทำงานบน remote VM ผ่าน `ssh myvm "..."`
-ติดตั้ง PostgreSQL, สร้าง db itsm + ตาราง incidents,
+ติดตั้ง PostgreSQL, สร้าง db itsm + ตาราง requests,
 รันทีละขั้น ตรวจผลก่อนไปต่อ
 ```
 
-**Ivanti ล่ม/ช้า?** สลับ mock ทันที:
+**ServiceDesk Plus ล่ม/ช้า?** สลับ mock ทันที:
 ```bash
-node ~/ivanti-mock/mock-server.js   # http://localhost:8080/incidents
+node ~/servicedesk-mock/mock-server.js   # http://localhost:8080/requests
 ```
 
 ดู Grafana: `ssh -L 3000:localhost:3000 myvm` → `http://localhost:3000`
 
-<!-- คนไม่ทำ capstone → ต่อยอด mini-project/skill ของตัวเอง -->
+<!-- ทุกคนทำ capstone นี้ต่อเนื่องจาก lab 04 เสมอ ไม่มี branch ให้ข้าม -->
 
 ---
 

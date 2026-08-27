@@ -35,7 +35,7 @@ cp -r /tmp/mp/skills/grilling ~/.claude/skills/grilling
 5. CLAUDE.md = ความจำของโปรเจกต์
 ```
 
-## SSH (optional capstone)
+## SSH (ใช้ตั้งแต่ lab 02)
 ```bash
 ssh myvm "uname -a"                 # สั่งงานข้าม SSH (ต้อง non-interactive)
 ssh -L 3000:localhost:3000 myvm     # port forward ดู Grafana

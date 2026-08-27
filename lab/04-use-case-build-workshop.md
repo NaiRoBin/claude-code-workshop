@@ -1,6 +1,7 @@
 # Lab 04 — Use case จริง: ใช้ Claude Code สร้างโปรเจกต์ (หัวข้อหลัก)
 
-> เวลา ~75 นาที (สาธิต ~20 + ลงมือ ~55) · ทำบน Windows notebook
+> เวลา ~75 นาที (สาธิต ~20 + ลงมือ ~55) · เปิด `claude` บน Windows notebook แล้วสั่งงาน
+> ข้าม SSH ไปทำงานบน VM (เหมือน lab 02) — ไม่ใช่โฟลเดอร์ local อีกต่อไป
 > เป้าหมาย: เห็นและทำตาม workflow จริงที่ใช้ Claude Code สร้างงานตั้งแต่ต้นจนจบ —
 > **workflow เดียวกับที่ผู้สอนใช้สร้าง workshop นี้ขึ้นมา**
 
@@ -23,7 +24,9 @@ workshop ชุดนี้ (ทุกไฟล์ที่คุณกำลั
 
 ## ส่วน A — ผู้สอนสาธิต (~20 นาที)
 
-ผู้สอนเปิด `claude` ในโฟลเดอร์ว่าง แล้วสาธิตสด:
+ผู้สอนเปิด `claude` บน Windows (session เดิมจาก lab 02 ก็ได้) แล้วให้สร้างโฟลเดอร์ว่าง
+บน VM ก่อน: `ssh myvm "mkdir -p ~/demo-mini"` (ถ้าเป็น session ใหม่ ให้บอก context ก่อนว่า
+"เราจะทำงานบน remote VM ผ่านคำสั่ง `ssh myvm \"...\"`" เหมือน lab 02) แล้วสาธิตสด:
 
 1. **ตั้งโจทย์ + เรียก grilling**
    ```
@@ -50,7 +53,10 @@ workshop ชุดนี้ (ทุกไฟล์ที่คุณกำลั
 
 ### ขั้นตอนแนะนำ
 ```
-1. เปิดโฟลเดอร์โปรเจกต์ใหม่:   mkdir my-mini && cd my-mini && claude
+1. เปิด `claude` บน Windows (ใช้ session เดิมจาก lab 02 ได้เลยถ้ายังเปิดอยู่ ไม่ต้องเปิดใหม่
+   — ถ้าเป็น session ใหม่ ให้บอกก่อนว่าเราทำงานบน remote VM ผ่าน ssh myvm "...")
+   แล้วให้ Claude สร้างโฟลเดอร์ ~/my-mini บน VM: ssh myvm "mkdir -p ~/my-mini"
+   จากนั้นทำงานทั้งหมดที่นั่นต่อไป
 2. /grilling <โจทย์ของคุณ>      # ให้ Claude ซักสเปก
 3. ขอให้ Claude เข้า plan mode และร่างแผน — ตรวจแผน
 4. อนุมัติ แล้วให้ Claude สร้าง/รัน
@@ -70,5 +76,5 @@ workshop ชุดนี้ (ทุกไฟล์ที่คุณกำลั
 ---
 
 ## ทำต่อ
-- อยากลงลึก remote/ops: ไป [`05-capstone-optional.md`](05-capstone-optional.md)
-- ไม่ทำ capstone: ต่อยอด mini-project/skill ของตัวเอง แล้วไป [`06-wrapup.md`](06-wrapup.md)
+ไปต่อ [`05-capstone.md`](05-capstone.md) — ให้ Claude Code สั่งงานข้าม SSH ไปคุม VM
+(ติดตั้ง DB/Grafana + ดึงข้อมูล) ต่อจาก mini-project นี้

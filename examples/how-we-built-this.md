@@ -20,7 +20,7 @@ Claude ร่างแผนเป็นไฟล์ .md  ── ตรวจ/�
 Claude ลงมือสร้างไฟล์ทั้งชุด + รันคำสั่ง
    │
    ▼  (4) วนทบทวน
-"ปรับ scope / เพิ่มหัวข้อ Skills / ทำ Ivanti เป็น optional" ...
+"ปรับ scope / เพิ่มหัวข้อ Skills / ให้ VM เป็น workspace หลักตั้งแต่ lab 02" ...
 ```
 
 ---
@@ -47,7 +47,7 @@ lab ต้องมี install บน Windows + WSL + ใช้ SSH จาก Wi
 | เน็ตเวิร์ก? | เปิด ต่อนอกได้อิสระ | ไม่ต้อง config proxy |
 | topology ของ VM? | 1 VM/คน มี root | สะอาดสำหรับ install DB/Grafana |
 | Claude Code รันที่ไหน? | native บน Windows, สั่งข้าม SSH ไป VM | สถาปัตยกรรมหลัก |
-| โฟกัส workshop? | Skills + use case นี้เป็นหลัก, Ivanti เป็น optional | ปรับลำดับเนื้อหา |
+| โฟกัส workshop? | Skills + use case + capstone (ServiceDesk Plus) ทั้งหมดเป็นหลัก, VM ใช้ตั้งแต่ lab 02 | ปรับลำดับเนื้อหา |
 
 > บทเรียน: **การถูกซักช่วยจับข้อขัดแย้งได้เร็ว** เช่น "ไม่มี admin" ขัดกับ "ติดตั้ง WSL" —
 > เจอตั้งแต่คำถามแรก ก่อนจะเสียเวลาสร้างของผิด
@@ -62,7 +62,8 @@ lab ต้องมี install บน Windows + WSL + ใช้ SSH จาก Wi
 พออนุมัติ Claude ลงมือ:
 - สร้างโครงโฟลเดอร์ (`mkdir -p ...`)
 - เขียนไฟล์ทีละไฟล์ (README, agenda, lab/*, scripts/*, slides/* ...)
-- รับ feedback ระหว่างทาง เช่น *"เพิ่มเรื่อง Skills"*, *"Ivanti เป็น option, Skills + use case เป็นหลัก"*
+- รับ feedback ระหว่างทาง เช่น *"เพิ่มเรื่อง Skills"*, *"ServiceDesk Plus/DB/Grafana เป็นส่วนหนึ่งของ
+  flow หลัก, VM ใช้ตั้งแต่ lab 02"*
   → Claude ปรับแผน + แก้ไฟล์ตาม
 
 ---

@@ -1,6 +1,6 @@
 # Lab 01 — ติดตั้ง Claude Code บน Windows (ไม่ต้องมี admin)
 
-> เวลา ~35 นาที · เป้าหมาย: มี Node + Claude Code ใช้งานได้ และ auth ผ่าน API key
+> เวลา ~35 นาที · เป้าหมาย: มี Claude Code ใช้งานได้, auth ผ่าน API key, และต่อ SSH เข้า VM ได้
 > ทุกขั้นตอนออกแบบให้ทำได้โดย **ไม่ต้องมีสิทธิ์ admin**
 
 ---
@@ -11,37 +11,9 @@
 
 ---
 
-## 1. ติดตั้ง Node.js แบบ no-admin ด้วย fnm
+## 1. ติดตั้ง Claude Code (native install)
 
-`fnm` เป็น Node version manager ที่ลงแบบ user-level ได้ ไม่ต้อง admin
-
-**PowerShell:**
-```powershell
-# ติดตั้ง fnm (ผ่าน winget ถ้ามี — ไม่ต้อง admin เพราะลงใน user scope)
-winget install Schniz.fnm
-
-# ถ้าไม่มี winget ให้โหลด fnm.exe จาก GitHub releases แล้ววางในโฟลเดอร์ใน PATH ของ user
-# https://github.com/Schniz/fnm/releases
-
-# เปิดใช้ fnm ใน session ปัจจุบัน
-fnm env --use-on-cd | Out-String | Invoke-Expression
-
-# ติดตั้ง Node LTS
-fnm install --lts
-fnm use lts-latest
-```
-
-### ✅ Checkpoint 1
-```powershell
-node -v    # ควรได้เวอร์ชัน LTS เช่น v20.x หรือใหม่กว่า
-npm -v
-```
-
----
-
-## 2. ติดตั้ง Claude Code (native install)
-
-วิธีที่ทางการแนะนำตอนนี้คือ **native install** (ไม่ใช่ผ่าน npm แล้ว) — ลงแบบ user-level ไม่ต้อง admin และอัปเดตตัวเองอัตโนมัติ
+วิธีที่ทางการแนะนำตอนนี้คือ **native install** (ไม่ใช่ผ่าน npm แล้ว) — ลงแบบ user-level ไม่ต้อง admin และอัปเดตตัวเองอัตโนมัติ ไม่ต้องมี Node/npm ก่อนเลย
 
 ```powershell
 irm https://claude.ai/install.ps1 | iex
@@ -59,10 +31,42 @@ irm https://claude.ai/install.ps1 | iex
 >
 > อ้างอิง: https://code.claude.com/docs/en/quickstart#native-install-recommended
 
-### ✅ Checkpoint 2
+### ✅ Checkpoint 1
 ```powershell
 claude --version
 ```
+
+---
+
+## 2. ต่อ SSH ไป VM ให้ non-interactive (สำคัญมาก)
+
+ตั้งแต่ lab 02 เป็นต้นไป Claude Code (ที่รันอยู่บน Windows) จะสั่งงานผ่าน `ssh myvm "<คำสั่ง>"`
+ไปทำงานบน VM ที่ผู้สอนเตรียมไว้ ดังนั้น ssh **ต้องไม่ค้างรอ prompt**
+
+1. สร้าง key (ถ้ายังไม่มี):
+   ```bash
+   ssh-keygen -t ed25519 -C "workshop"
+   ```
+2. ผู้สอนแจก host/user + ติดตั้ง public key บน VM ให้แล้ว (หรือทำตามที่ผู้สอนบอก)
+3. ตั้ง `~/.ssh/config` ให้เรียกสั้น ๆ และไม่ถาม host key:
+   ```
+   Host myvm
+       HostName <VM_IP>
+       User <student-user>
+       IdentityFile ~/.ssh/id_ed25519
+       StrictHostKeyChecking accept-new
+   ```
+4. ทดสอบ:
+   ```bash
+   ssh myvm "uname -a"      # ต้องได้ผลลัพธ์ทันที ไม่ถาม yes/no ไม่ถามรหัส
+   ```
+
+### ✅ Checkpoint 2
+`ssh myvm "hostname"` ทำงานได้แบบไม่ถามอะไรเลย = พร้อมให้ Claude Code สั่งข้าม SSH ใน lab ถัดไป
+
+> 💡 fallback A: ถ้าใครลง Claude Code บน Windows ไม่ได้ (Checkpoint 1 ไม่ผ่าน) → `ssh myvm`
+> เข้าไป แล้วลง Claude Code (native install แบบเดียวกัน แต่รันบน VM) แล้วรัน `claude`
+> **บน VM** ทำ lab ที่เหลือจากในนั้นแทน (ขั้นตอนเนื้อหาเหมือนกันทุกอย่าง)
 
 ---
 
@@ -98,11 +102,13 @@ claude
 สังเกต **permission prompt** ก่อน Claude เขียนไฟล์ → กด allow
 
 ### ✅ Checkpoint 4
-มีไฟล์ `hello.txt` เกิดขึ้น และเนื้อหาตรงตามสั่ง = ติดตั้งครบและใช้งานได้ 🎉
+มีไฟล์ `hello.txt` เกิดขึ้น และเนื้อหาตรงตามสั่ง (ยืนยันว่า Claude Code บน Windows ใช้ได้จริง)
+**และ** `ssh myvm "hostname"` จาก Checkpoint 2 ยังทำงานได้แบบไม่ถามอะไรเลย
+= ติดตั้งครบและพร้อมไปทำงานบน VM ใน lab ถัดไป 🎉
 
 ---
 
 ## ติดปัญหา?
-- ลง Node/Claude Code ไม่ได้ → ดู [`99-troubleshooting.md`](99-troubleshooting.md)
+- ลง Claude Code ไม่ได้ → ดู [`99-troubleshooting.md`](99-troubleshooting.md)
 - ถ้ายังไม่ได้จริง ๆ → ใช้ **fallback A**: SSH เข้า VM แล้วรัน Claude Code บน VM แทน
-  (ดู [`05-capstone-optional.md`](05-capstone-optional.md) หัวข้อการต่อ SSH)
+  (ดู [`05-capstone.md`](05-capstone.md) หัวข้อการต่อ SSH)

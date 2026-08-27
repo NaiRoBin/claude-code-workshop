@@ -1,11 +1,11 @@
 # Lab 06 — สรุป & Best practices
 
 ## สิ่งที่ได้เรียนวันนี้
-- ติดตั้ง & ใช้ Claude Code บน Windows (ไม่ต้องมี admin)
-- พื้นฐาน: prompting, แก้ไฟล์, รันคำสั่ง, permission, git, **plan mode**
-- **Skills**: ติดตั้งจาก GitHub + สร้างเอง
-- **Use case จริง**: ใช้ Claude Code สร้างโปรเจกต์ผ่าน grill-me → plan → generate
-- (Optional) ให้ Claude Code สั่งงานข้าม SSH ไปติดตั้ง DB/Grafana + ดึง Ivanti
+- ติดตั้ง & ใช้ Claude Code บน Windows (ไม่ต้องมี admin) + ต่อ SSH เข้า VM
+- พื้นฐาน: prompting, แก้ไฟล์, รันคำสั่ง, permission, git, **plan mode** (บน VM ผ่าน SSH)
+- **Skills**: ติดตั้งจาก GitHub + สร้างเอง (บน Windows notebook)
+- **Use case จริง**: ใช้ Claude Code สร้างโปรเจกต์ผ่าน grill-me → plan → generate (บน VM)
+- **Capstone**: ให้ Claude Code สั่งงานข้าม SSH ไปติดตั้ง DB/Grafana + ดึง ServiceDesk Plus บน VM ตัวเดิม
 
 ## Best practices ที่ควรจำ
 1. **ให้ context ดี** — เป้าหมาย, ข้อจำกัด, ตัวอย่าง input/output

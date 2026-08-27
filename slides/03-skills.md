@@ -25,6 +25,10 @@ theme: default
   - เรียกใช้ skill ได้
   - สร้าง skill เล็กๆ เองได้
 
+> หมายเหตุ: lab นี้ทำบน Windows laptop เหมือนเดิม ไม่ใช่บน VM เพราะ personal skills
+> (`~/.claude/skills/...`) ผูกกับเครื่องที่รัน `claude` จริง (laptop ของคุณ) ไม่ใช่เครื่องที่
+> Claude Code สั่งงานไปถึงผ่าน SSH (VM) แบบที่ lab 02/04/05 ใช้
+
 <!--
 บอกผู้เรียนว่ามี 6 หัวข้อหลัก: (1) skill คืออะไร (2) personal vs project (3) ติดตั้งจาก GitHub
 (4) marketplace ทางเลือก (5) เรียกใช้ (6) สร้างเอง — แต่ละหัวข้อมี checkpoint ให้เช็คว่าทำถูก

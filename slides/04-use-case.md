@@ -9,7 +9,8 @@ theme: default
 # Lab 04 — Use case จริง 🚀
 ## ใช้ Claude Code สร้างโปรเจกต์ตั้งแต่ต้นจนจบ
 
-⏱️ ~75 นาที (สาธิต ~20 + ลงมือ ~55) · บน Windows notebook
+⏱️ ~75 นาที (สาธิต ~20 + ลงมือ ~55) · เปิด `claude` บน Windows notebook
+แล้วสั่งงานข้าม SSH ไปทำบน VM (เหมือน lab 02)
 
 📄 `lab/04-use-case-build-workshop.md` · `examples/how-we-built-this.md`
 
@@ -104,7 +105,7 @@ Claude จะเดินไล่ **decision tree ทีละกิ่ง** �
 | เน็ตเวิร์ก? | เปิด ต่อนอกได้อิสระ | ไม่ต้อง config proxy |
 | topology ของ VM? | 1 VM/คน มี root | สะอาดสำหรับ install DB/Grafana |
 | Claude Code รันที่ไหน? | native บน Windows, สั่งข้าม SSH ไป VM | สถาปัตยกรรมหลัก |
-| โฟกัส workshop? | Skills + use case นี้เป็นหลัก, Ivanti เป็น optional | ปรับลำดับเนื้อหา |
+| โฟกัส workshop? | Skills + use case + capstone (ServiceDesk Plus) เป็นหลักทั้งหมด | VM เป็น workspace ตั้งแต่ lab 02 ไม่ใช่แค่ capstone |
 
 <!-- 7 คำถามรวมทั้ง 2 สไลด์นี้คือของจริงทั้งหมดจาก log การสร้าง workshop — ไม่ได้แต่งเพิ่ม -->
 
@@ -169,7 +170,7 @@ Claude จะเดินไล่ **decision tree ทีละกิ่ง** �
 
 ```
 "เพิ่มเรื่อง Skills"
-"Ivanti เป็น option, Skills + use case เป็นหลัก"
+"ServiceDesk Plus/DB/Grafana เป็นส่วนหนึ่งของ flow หลัก, VM ใช้ตั้งแต่ lab 02"
 ```
 
 Claude รับ feedback แล้ว **ปรับแผน + แก้ไฟล์ตาม** ทันที ไม่ต้องเริ่มใหม่ทั้งหมด
@@ -190,7 +191,12 @@ Claude รับ feedback แล้ว **ปรับแผน + แก้ไฟ
 
 ## สาธิต 1 — ตั้งโจทย์ + เรียก grilling
 
-เปิด `claude` ในโฟลเดอร์ว่าง แล้วพิมพ์:
+เปิด `claude` บน Windows (session เดิมจาก lab 02 ก็ได้) แล้วให้สร้างโฟลเดอร์ว่างบน VM ก่อน:
+```
+ssh myvm "mkdir -p ~/demo-mini"
+```
+(ถ้าเป็น session ใหม่ ให้บอก context ก่อนว่า "เราจะทำงานบน remote VM ผ่านคำสั่ง
+`ssh myvm \"...\"`" เหมือน lab 02) แล้วพิมพ์:
 
 ```
 # ตั้งโจทย์กว้าง ๆ แล้วให้ Claude ซักถามกลับ
@@ -294,7 +300,10 @@ skill `/tdd` ที่เคยติดตั้งไว้ตอนเช้�
 ## ขั้นตอนแนะนำสำหรับ mini-project
 
 ```
-1. เปิดโฟลเดอร์โปรเจกต์ใหม่:   mkdir my-mini && cd my-mini && claude
+1. เปิด `claude` บน Windows (session เดิมจาก lab 02 ได้เลย ไม่ต้องเปิดใหม่ — ถ้าเป็น
+   session ใหม่ ให้บอกก่อนว่าเราทำงานบน remote VM ผ่าน ssh myvm "...")
+   แล้วให้ Claude สร้างโฟลเดอร์ ~/my-mini บน VM: ssh myvm "mkdir -p ~/my-mini"
+   จากนั้นทำงานทั้งหมดที่นั่นต่อไป
 2. /grilling <โจทย์ของคุณ>      # ให้ Claude ซักสเปก
 3. ขอให้ Claude เข้า plan mode และร่างแผน — ตรวจแผน
 4. อนุมัติ แล้วให้ Claude สร้าง/รัน
@@ -348,8 +357,7 @@ skill `/tdd` ที่เคยติดตั้งไว้ตอนเช้�
 
 ## ทำต่อ →
 
-- อยากลงลึก remote/ops: ไป **`05-capstone-optional.md`**
-  (Claude Code สั่งงานข้าม SSH ไปคุม VM)
-- ไม่ทำ capstone: ต่อยอด mini-project/skill ของตัวเอง แล้วไป **`06-wrapup.md`**
+ไปต่อ **`05-capstone.md`** — ให้ Claude Code สั่งงานข้าม SSH ไปคุม VM
+(ติดตั้ง DB/Grafana + ดึงข้อมูล) ต่อจาก mini-project นี้
 
-<!-- เปิดทางเลือกให้ผู้เรียนเลือกเอง คนที่สนใจ ops/infra ไปต่อ capstone คนอื่นพอใจกับ mini-project ก็ไป wrap-up ได้เลย -->
+<!-- capstone ไม่ optional แล้ว ทุกคนไปต่อ lab 05 เหมือนกัน ไม่มีทางแยกให้ข้ามอีกต่อไป -->

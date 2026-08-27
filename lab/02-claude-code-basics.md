@@ -1,17 +1,21 @@
 # Lab 02 — พื้นฐาน Claude Code + Plan mode
 
-> เวลา ~65 นาที · ทำบนโปรเจกต์ตัวอย่าง `../sample-project/`
+> เวลา ~65 นาที · ทำบนโปรเจกต์ตัวอย่าง (provision ไว้บน VM แล้วที่ `~/cc-basics`)
 > เป้าหมาย: สั่งงาน, แก้ไฟล์, รันคำสั่ง, ใช้ `/commands`, เข้าใจ permission, git, และ plan mode
 
 ---
 
-## เตรียม: เปิดโปรเจกต์ตัวอย่าง
-```bash
-# คัดลอกโปรเจกต์ตัวอย่างมาที่ของตัวเอง
-cp -r <path>/claude_lab/sample-project ~/cc-basics
-cd ~/cc-basics
-claude
+## เตรียม: บอก Claude ว่าทำงานบน VM
+
+เปิด `claude` ตามปกติบน Windows (ไม่ต้อง cd ไปไหน ไม่ต้อง copy อะไรมาที่เครื่องตัวเอง)
+แล้วบอก context ก่อนเริ่ม:
 ```
+เราจะทำงานบน remote VM ผ่านคำสั่ง `ssh myvm "..."`
+โปรเจกต์ตัวอย่างอยู่ที่ `~/cc-basics` บน VM แล้ว (provision ไว้ให้แล้ว)
+ใช้ ssh คำสั่งนี้อ่าน/แก้ไฟล์และรันคำสั่งทุกครั้งตลอด lab นี้
+```
+จากนี้ Claude จะใช้ Bash tool ยิง `ssh myvm "cd ~/cc-basics && ..."` เองทุกครั้งที่ต้อง
+อ่าน/แก้ไฟล์หรือรันคำสั่ง — เหมือน pattern เดียวกับที่ lab 05 ใช้สั่งงานข้าม SSH
 
 ---
 
@@ -28,6 +32,7 @@ claude
 ```
 - ดู **diff** ที่ Claude เสนอ ก่อนกด allow
 - ลองสั่งแก้ต่อ: `เปลี่ยนชื่อ multiply เป็น mul และอัปเดตที่เรียกใช้ทั้งหมด`
+- ตรวจเองได้ผ่าน ssh เช่นกัน: `ssh myvm "cat ~/cc-basics/src/calculator.js"`
 
 ## 3. รันคำสั่ง & permission (10 นาที)
 ```
@@ -67,6 +72,7 @@ git init ให้หน่อย แล้ว commit งานปัจจุ�
 ### ✅ Checkpoint 2
 - แก้ไฟล์ผ่าน Claude ได้, เห็น diff/permission, commit ผ่าน git ได้
 - เข้าใจว่า plan mode ใช้เมื่อไร และมี `CLAUDE.md` ในโปรเจกต์
+- ตรวจทุกอย่างบน VM ได้เองผ่าน `ssh myvm "cd ~/cc-basics && git log --oneline"`
 
 ---
 

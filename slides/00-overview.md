@@ -73,10 +73,10 @@ Workshop 1 วัน (10:00–12:00 และ 13:30–16:30 รวม 5 ชั�
 
 | โฟกัส | ตัวอย่างการใช้งานในวันนี้ |
 |---|---|
-| พื้นฐาน | ติดตั้งบน Windows (no-admin), สั่งงาน, แก้ไฟล์, รันคำสั่ง, git |
+| พื้นฐาน | ติดตั้งบน Windows (no-admin) + ต่อ SSH เข้า VM, สั่งงาน, แก้ไฟล์, รันคำสั่ง, git |
 | Skills | ติดตั้ง skill จาก GitHub (mattpocock, karpathy) + สร้าง skill เอง |
-| Use case จริง | ใช้ Claude Code เตรียม workshop นี้เอง — grill-me → plan → สร้างไฟล์ |
-| Capstone (optional) | สั่งงานข้าม SSH ไปติดตั้ง DB/Grafana บน Linux VM + ดึงข้อมูล Ivanti |
+| Use case จริง | ใช้ Claude Code เตรียม workshop นี้เอง — grill-me → plan → สร้างไฟล์ (บน VM) |
+| Capstone | สั่งงานข้าม SSH ไปติดตั้ง DB/Grafana บน Linux VM + ดึงข้อมูล ServiceDesk Plus |
 
 <!--
 ตารางนี้คือภาพรวม 4 โฟกัสของวัน จะขยายรายละเอียดในสไลด์ถัดไป
@@ -155,12 +155,14 @@ takeaway ที่อยากให้ติดตัวผู้เรีย�
 - เครื่องผู้เรียนเป็น **Windows notebook ที่ไม่มีสิทธิ์ admin**
 - จึง **ติดตั้ง WSL สดในคลาสไม่ได้** (เปิด WSL ต้องใช้ admin)
 - ทางออก: รัน Claude Code **native บน Windows** แบบ no-admin เป็นเส้นทางหลัก
-- ส่วน Linux VM ใช้เฉพาะ **optional capstone** เท่านั้น
+- Linux VM คือ **workspace กลางตั้งแต่ lab 02 เป็นต้นไป** — ไม่ใช่แค่ capstone อีกต่อไป
+  ทุกคนได้ environment เดียวกัน ไม่ขึ้นกับสภาพเครื่อง Windows ของแต่ละคน
 - WSL เป็นเอกสาร self-study (`self-study/wsl-setup-guide.md`) — ไม่สอนสดในคลาส
 
 <!--
 อธิบายเหตุผลเชิง constraint ก่อนโชว์ diagram: ถ้าไม่มีข้อจำกัด admin เราอาจใช้ WSL ตรง ๆ
 แต่เพราะ noteBook บริษัท/องค์กรมักไม่ให้ admin เราเลยออกแบบ native Windows + SSH ไป VM แทน
+VM ใช้ตั้งแต่ lab 02 (ไม่ใช่แค่ capstone) เพื่อให้ทุกคนมี environment เดียวกันแน่นอน
 -->
 
 ---
@@ -172,20 +174,24 @@ takeaway ที่อยากให้ติดตัวผู้เรีย�
 │  Windows notebook      │  ───────────────▶  │  Linux VM (1 ตัว/คน)  │
 │  (no admin)            │   ssh myvm "..."   │  มี root               │
 │                        │                    │                       │
-│  • Claude Code (native)│                    │  • PostgreSQL          │
-│  • ssh client          │   ssh -L 3000      │  • Grafana             │
-│  • browser  ◀──────────┼────────────────────┤  • ข้อมูลจาก Ivanti   │
+│  • Claude Code (native)│                    │  • sample-project      │
+│  • ssh client          │   ssh -L 3000      │    (lab02) + mini-     │
+│  • browser  ◀──────────┼────────────────────┤    project (lab04)    │
+│                        │                    │  • PostgreSQL/Grafana/ │
+│                        │                    │    ServiceDesk Plus    │
+│                        │                    │    หรือ mock (lab05)  │
 └────────────────────────┘                    └───────────────────────┘
 ```
 
-- Claude Code รัน **native บน Windows** (ติดตั้งแบบ no-admin) — เส้นทางหลัก
-- Claude Code **สั่งงานข้าม SSH** ไปติดตั้ง/คุม Linux VM ของผู้เรียน (agent orchestrate remote server)
+- Claude Code รัน **native บน Windows** (ติดตั้งแบบ no-admin) — เส้นทางหลัก, laptop ไม่ต้องมี Node/npm เลย
+- ตั้งแต่ **lab 02** เป็นต้นไป Claude Code **สั่งงานข้าม SSH** ไปทำงานจริงบน Linux VM ของผู้เรียน
+  (agent orchestrate remote server) — VM ไม่ใช่ของแถมเฉพาะ capstone อีกต่อไป
 - ดู Grafana ผ่าน `ssh -L 3000` แล้วเปิด browser ที่ `http://localhost:3000`
 
 <!--
 เดินอธิบาย diagram ทีละลูกศร: ซ้ายคือเครื่องผู้เรียน (Windows, no admin)
-ขวาคือ VM ส่วนตัวของผู้เรียนแต่ละคน (มี root) ที่ใช้เฉพาะ optional capstone
-Claude Code บน Windows เป็นตัวสั่งงานหลัก ยิง SSH ไปทำงานบน VM แทนเรา
+ขวาคือ VM ส่วนตัวของผู้เรียนแต่ละคน (มี root) ที่เป็น workspace หลักตั้งแต่ lab 02
+Claude Code บน Windows เป็นตัวสั่งงานหลัก ยิง SSH ไปทำงานบน VM แทนเรา ตั้งแต่ lab02 ถึง lab05
 -->
 
 ---
@@ -210,9 +216,9 @@ Claude Code บน Windows เป็นตัวสั่งงานหลั�
 
 ## โฟกัสที่ 1 — พื้นฐาน Claude Code
 
-- ติดตั้งบน Windows (no-admin) + ใช้งานบนโปรเจกต์จริง
-- Node (fnm) → Claude Code → `ANTHROPIC_API_KEY` → `claude` ครั้งแรก
-- Fundamentals: prompting, แก้ไฟล์, รันคำสั่ง, `/commands`, permission, git
+- ติดตั้งบน Windows (no-admin) + ต่อ SSH เข้า VM แล้วใช้งานบนโปรเจกต์จริง
+- Claude Code (native install) → ต่อ SSH เข้า VM → `ANTHROPIC_API_KEY` → `claude` ครั้งแรก
+- Fundamentals: prompting, แก้ไฟล์, รันคำสั่ง, `/commands`, permission, git (ทำงานบน VM ผ่าน SSH)
 - Plan mode & workflow — ปูทางเข้าช่วงบ่าย
 
 <!-- ช่วงนี้คือ 10:00-12:00 ทั้งเช้า อธิบายว่าเป็นฐานที่ต้องมีก่อนไปทำ Skills/Use case ช่วงบ่าย -->
@@ -246,17 +252,17 @@ Claude Code บน Windows เป็นตัวสั่งงานหลั�
 
 ---
 
-## โฟกัสที่ 4 — Capstone (Optional)
+## โฟกัสที่ 4 — Capstone: ServiceDesk Plus + Grafana
 
-- SSH ไป Linux VM (1 ตัว/คน) แล้วให้ Claude Code ติดตั้ง PostgreSQL + Grafana
-- ดึงข้อมูลจาก Ivanti (เสริม สำหรับคนอยากลงลึก remote orchestration)
+- ต่อจาก VM เดิมที่ใช้มาตั้งแต่ lab 02 ให้ Claude Code ติดตั้ง PostgreSQL + Grafana
+- ดึงข้อมูลจาก ServiceDesk Plus (หรือ mock ถ้า staging ไม่พร้อม/ช้า)
 - ดู dashboard ผ่าน `ssh -L 3000` แล้วเปิด browser
-- คนไม่ทำ capstone → ต่อยอด mini-project หรือ skill ของตัวเองต่อ
+- เป็นส่วนหนึ่งของ flow หลักตอนนี้ — ทุกคนทำต่อจาก lab 04 เข้า lab 05 เสมอ
 
 <!--
-ย้ำว่าเป็น optional จริง ๆ — สำหรับคนที่ทำ use case เสร็จเร็วและอยากลงลึกเรื่อง remote orchestration
-คนที่ไม่ถนัดหรือเวลาไม่พอ ไปต่อยอด mini-project ของตัวเองแทนได้ ไม่มีใครเสียโอกาส
-ถ้าเวลาไม่พอในวันจริง capstone คือส่วนแรกที่ตัด/ย่อ
+lab 05 รวมเข้า flow หลักแล้ว ไม่ optional อีกต่อไป เพราะ VM ถูกใช้งานมาตั้งแต่ lab 02
+ถ้าเวลาไม่พอในวันจริง ให้ย่อความลึกของ Skills (lab03) หรือลดโจทย์ mini-project (lab04) แทน
+ไม่ใช่ตัด lab 05
 -->
 
 ---
@@ -271,8 +277,8 @@ Claude Code บน Windows เป็นตัวสั่งงานหลั�
 | เวลา | หัวข้อ | ไฟล์อ้างอิง | หมายเหตุผู้สอน |
 |---|---|---|---|
 | 10:00–10:20 | บทนำ: Claude Code คืออะไร, use case, โมเดล, ค่าใช้จ่าย & ความปลอดภัยเบื้องต้น | `slides/slides.md` | ปูภาพรวมทั้งวัน |
-| 10:20–10:55 | ติดตั้งบน Windows (no-admin): Node (fnm) → Claude Code → `ANTHROPIC_API_KEY` → `claude` ครั้งแรก | `lab/01-windows-setup.md` | แจก API key ตรงนี้ · เดินช้าๆ · คนติดปัญหา → fallback A |
-| 10:55–11:35 | Fundamentals บนโปรเจกต์ตัวอย่าง: prompting, แก้ไฟล์, รันคำสั่ง, `/commands`, permission, git | `lab/02-claude-code-basics.md`, `sample-project/` | ให้ลงมือทำจริงทุกคน มี checkpoint |
+| 10:20–10:55 | ติดตั้งบน Windows (no-admin): Claude Code (native install) → ต่อ SSH เข้า VM → `ANTHROPIC_API_KEY` → `claude` ครั้งแรก | `lab/01-windows-setup.md` | แจก API key ตรงนี้ · เดินช้าๆ · คนติดปัญหา → fallback A |
+| 10:55–11:35 | Fundamentals บนโปรเจกต์ตัวอย่าง (บน VM ผ่าน SSH): prompting, แก้ไฟล์, รันคำสั่ง, `/commands`, permission, git | `lab/02-claude-code-basics.md`, `sample-project/` (provision ไว้บน VM แล้ว) | ให้ลงมือทำจริงทุกคน มี checkpoint |
 | 11:35–12:00 | Plan mode & workflow (ปูทางช่วงบ่าย): plan/ExitPlanMode, การให้ context, `CLAUDE.md` | `lab/02-claude-code-basics.md` §Plan | เชื่อมเข้า use-case ตอนบ่าย |
 
 **พักเที่ยง 12:00–13:30**
@@ -284,32 +290,33 @@ Claude Code บน Windows เป็นตัวสั่งงานหลั�
 
 ---
 
-## ช่วงบ่าย 13:30–16:30 — Skills + Use case (หลัก), Capstone (optional)
+## ช่วงบ่าย 13:30–16:30 — Skills + Use case + Capstone (ทั้งหมดเป็นหลัก)
 
 | เวลา | หัวข้อ | ไฟล์อ้างอิง | หมายเหตุผู้สอน |
 |---|---|---|---|
-| 13:30–14:15 | **Skills (หลัก):** skill คืออะไร/ทำไมดี, ติดตั้งจาก GitHub (mattpocock, karpathy) แบบ manual + `/plugin`, เรียกใช้, สร้าง skill เล็กๆ | `lab/03-skills.md` | ให้ทุกคนติดตั้ง `grilling` แล้วลองใช้ทันที |
-| 14:15–15:30 | **Use case จริง (เน้นมาก):** "เราใช้ Claude Code สร้าง workshop นี้อย่างไร" — สาธิต grill-me → plan → generate files, แล้วให้ผู้เรียนทำ mini-project ด้วย workflow เดียวกัน | `lab/04-use-case-build-workshop.md`, `examples/how-we-built-this.md` | สาธิต ~20 นาที แล้วปล่อยลงมือ ~50 นาที |
-| 15:30–16:15 | **(Optional) Capstone:** SSH → VM ให้ Claude Code ติดตั้ง Postgres/Grafana + (ถ้ามี) ดึง Ivanti → dashboard ผ่าน `ssh -L` · คนไม่ทำ capstone → ต่อยอด mini-project/skill ตัวเอง | `lab/05-capstone-optional.md` | แยกกลุ่ม: อยากลงลึก vs อยากฝึกต่อ |
+| 13:30–14:15 | **Skills (หลัก):** skill คืออะไร/ทำไมดี, ติดตั้งจาก GitHub (mattpocock, karpathy) แบบ manual + `/plugin`, เรียกใช้, สร้าง skill เล็กๆ (บน Windows laptop) | `lab/03-skills.md` | ให้ทุกคนติดตั้ง `grilling` แล้วลองใช้ทันที |
+| 14:15–15:30 | **Use case จริง (เน้นมาก):** "เราใช้ Claude Code สร้าง workshop นี้อย่างไร" — สาธิต grill-me → plan → generate files, แล้วให้ผู้เรียนทำ mini-project ด้วย workflow เดียวกันบน VM | `lab/04-use-case-build-workshop.md`, `examples/how-we-built-this.md` | สาธิต ~20 นาที แล้วปล่อยลงมือ ~50 นาที |
+| 15:30–16:15 | **Capstone:** ต่อบน VM เดิม ให้ Claude Code ติดตั้ง Postgres/Grafana + ดึงข้อมูล ServiceDesk Plus (หรือ mock) → dashboard ผ่าน `ssh -L` | `lab/05-capstone.md` | เป็นส่วนหนึ่งของ flow หลัก ทุกคนทำต่อเนื่องจาก lab 04 |
 | 16:15–16:30 | สรุป best practices, `CLAUDE.md`, security, ค่าใช้จ่าย, Q&A, แจก self-study (WSL) | `lab/06-wrapup.md`, `self-study/` | |
 
 <!--
-ตารางนี้คือ agenda.md ช่วงบ่ายเป๊ะ ๆ — Skills กับ Use case คือแกนหลัก ห้ามตัดเวลา
-capstone คือส่วนแรกที่ตัด/ย่อถ้าเวลาไม่พอ ให้แยกกลุ่มตามความสนใจตอน 15:30
+ตารางนี้คือ agenda.md ช่วงบ่ายเป๊ะ ๆ — Skills, Use case, และ Capstone ทั้งหมดเป็นแกนหลักตอนนี้
+ถ้าเวลาไม่พอ ให้ย่อความลึกของ Skills หรือลดโจทย์ mini-project ของ Use case แทน ไม่ตัด Capstone
 -->
 
 ---
 
 ## จุดตัดสินใจเรื่องเวลา
 
-- **Skills + use-case คือแกน — ห้ามตัด**
-- ถ้าเวลาไม่พอ ให้ตัด/ย่อ **optional capstone ก่อน**
+- **Skills + use-case + capstone คือแกนหลักทั้งหมด — ไม่มีส่วนไหน "ตัดได้ง่าย ๆ" อีกแล้ว**
+- ถ้าเวลาไม่พอ ให้ **ย่อความลึกของ Skills** (สอน skill เดียวพอ) **หรือลดโจทย์ mini-project ของ
+  use-case ให้เล็กลง** แทนการตัด capstone
 - ถ้าเช้าเกินเวลา: ย่อ fundamentals เหลือ prompting + แก้ไฟล์ + git, ยก plan mode ไปเปิดหัวช่วงบ่ายแทน
-- capstone ส่วน Ivanti หนักสุด — ช้าเมื่อไรสลับไปใช้ mock (`scripts/ivanti-mock/`) ทันที
+- capstone ส่วน ServiceDesk Plus หนักสุด — ช้าเมื่อไรสลับไปใช้ mock (`scripts/servicedesk-mock/`) ทันที
 
 <!--
 สไลด์นี้สำหรับผู้สอนโดยเฉพาะ ใช้เป็น decision tree เวลาคุมเวลาหน้างาน
-ท่องไว้: ตัด capstone ก่อนเสมอ ไม่ตัด skills/use-case
+ท่องไว้: capstone รวมเข้า flow หลักแล้ว ไม่ตัด — ถ้าจะประหยัดเวลาให้ย่อ skills/use-case แทน
 -->
 
 ---
@@ -324,7 +331,7 @@ capstone คือส่วนแรกที่ตัด/ย่อถ้าเ�
 - **Auth:** Anthropic Console API key (`ANTHROPIC_API_KEY`) — 1 key ต่อคน จาก workspace เดียวกัน
 - ตั้ง **spend limit รวม** ของ workspace ไว้ล่วงหน้า เพื่อคุมค่าใช้จ่าย
 - ผู้สอนแจก API key หน้างาน (ช่วง 10:20–10:55)
-- **ห้าม commit** ค่าจริง เช่น Ivanti endpoint/token, API key — ใช้ผ่าน environment variable หรือแจกหน้างานเท่านั้น
+- **ห้าม commit** ค่าจริง เช่น ServiceDesk Plus endpoint/token, API key — ใช้ผ่าน environment variable หรือแจกหน้างานเท่านั้น
 - เราคุม permission ของ Claude Code ได้เสมอ ก่อนให้ทำสิ่งที่กระทบระบบ
 
 <!--

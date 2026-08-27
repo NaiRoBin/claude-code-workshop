@@ -55,7 +55,7 @@ ip addr | grep inet        # ดู IP ของ WSL
 ```
 จาก Windows: `ssh <wsl-user>@<wsl-ip>` แล้วรัน `claude` ใน WSL
 
-> เทียบกับคลาส: แนวคิดเดียวกับ optional capstone (SSH ไปรัน Claude Code บน Linux)
+> เทียบกับคลาส: แนวคิดเดียวกับที่ใช้ตั้งแต่ lab 02 เป็นต้นไป (SSH ไปรัน Claude Code/ทำงานบน Linux)
 > ต่างกันแค่ Linux อยู่ในเครื่อง (WSL) แทนที่จะเป็น VM ภายนอก
 
 ## อ้างอิงในคลาส

@@ -3,6 +3,10 @@
 > เวลา ~45 นาที · ทำบน Windows notebook (Claude Code native)
 > เป้าหมาย: เข้าใจว่า skill คืออะไร, ติดตั้ง skill จาก GitHub ได้, เรียกใช้ได้, และสร้าง skill เล็กๆ เองได้
 
+> หมายเหตุ: lab นี้ทำบน Windows laptop เหมือนเดิม ไม่ใช่บน VM เพราะ personal skills
+> (`~/.claude/skills/...`) ผูกกับเครื่องที่รัน `claude` จริง (laptop ของคุณ) ไม่ใช่เครื่องที่
+> Claude Code สั่งงานไปถึงผ่าน SSH (VM) แบบที่ lab 02/04/05 ใช้
+
 ---
 
 ## 1. Skill คืออะไร (5 นาที)

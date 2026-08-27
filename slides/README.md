@@ -8,11 +8,11 @@
 | ไฟล์ | ช่วง | เนื้อหา |
 |---|---|---|
 | `00-overview.md` | 10:00–10:20 | บทนำ, กติกา, Claude Code คืออะไร, **harness (เทียบ Claude Code/Hermes/Antigravity)**, สถาปัตยกรรม, 4 โฟกัส, ตารางเวลา, ค่าใช้จ่าย/security |
-| `01-windows-setup.md` | 10:20–10:55 | ติดตั้งบน Windows (no-admin): fnm → Node → Claude Code → API key |
-| `02-basics.md` | 10:55–12:00 | พื้นฐาน: prompting, แก้ไฟล์, permission, git, plan mode, CLAUDE.md |
-| `03-skills.md` **(หลัก)** | 13:30–14:15 | Skills: ติดตั้งจาก GitHub, เรียกใช้, สร้างเอง |
-| `04-use-case.md` **(หลัก)** | 14:15–15:30 | Use case จริง: grill-me → plan → generate + mini-project |
-| `05-capstone.md` *(optional)* | 15:30–16:15 | สั่ง Claude Code ข้าม SSH → Postgres/Grafana/Ivanti |
+| `01-windows-setup.md` | 10:20–10:55 | ติดตั้งบน Windows (no-admin): Claude Code (native install) → ต่อ SSH เข้า VM → API key |
+| `02-basics.md` | 10:55–12:00 | พื้นฐาน (บน VM ผ่าน SSH): prompting, แก้ไฟล์, permission, git, plan mode, CLAUDE.md |
+| `03-skills.md` **(หลัก)** | 13:30–14:15 | Skills: ติดตั้งจาก GitHub, เรียกใช้, สร้างเอง (บน Windows notebook) |
+| `04-use-case.md` **(หลัก)** | 14:15–15:30 | Use case จริง: grill-me → plan → generate + mini-project (บน VM) |
+| `05-capstone.md` **(หลัก)** | 15:30–16:15 | สั่ง Claude Code ข้าม SSH → Postgres/Grafana/ServiceDesk Plus |
 | `06-wrapup.md` | 16:15–16:30 | best practices, security, ค่าใช้จ่าย, Q&A |
 
 ไฟล์ประกอบ:
