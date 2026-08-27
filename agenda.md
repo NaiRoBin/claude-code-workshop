@@ -22,7 +22,7 @@
 |---|---|---|---|
 | 13:30–14:15 | **Skills (หลัก):** skill คืออะไร/ทำไมดี, ติดตั้งจาก GitHub (mattpocock, karpathy) แบบ manual + `/plugin`, เรียกใช้, สร้าง skill เล็กๆ (บน Windows notebook) | `lab/03-skills.md` | ให้ทุกคนติดตั้ง `grilling` แล้วลองใช้ทันที |
 | 14:15–15:30 | **Use case จริง (เน้นมาก):** "เราใช้ Claude Code สร้าง workshop นี้อย่างไร" — สาธิต grill-me → plan → generate files, แล้วให้ผู้เรียนทำ mini-project ด้วย workflow เดียวกันบน VM | `lab/04-use-case-build-workshop.md`, `examples/how-we-built-this.md` | สาธิต ~20 นาที แล้วปล่อยลงมือ ~50 นาที |
-| 15:30–16:15 | **Capstone:** ต่อบน VM เดิม ให้ Claude Code ติดตั้ง Postgres/Grafana + ดึงข้อมูล ServiceDesk Plus (หรือ mock) → dashboard ผ่าน `ssh -L` | `lab/05-capstone.md` | ทุกคนทำต่อเนื่องจาก lab 04 ไม่มี branch ให้ข้าม |
+| 15:30–16:15 | **Capstone:** ต่อบน VM เดิม ให้ Claude Code ติดตั้ง Postgres/Grafana + ดึงข้อมูล ServiceDesk Plus (หรือ mock) → เปิด dashboard ตรง ๆ ที่ `http://<VM_IP>:3000` (security group เปิดพอร์ต 3000 ไว้แล้ว) | `lab/05-capstone.md` | ทุกคนทำต่อเนื่องจาก lab 04 ไม่มี branch ให้ข้าม |
 | 16:15–16:30 | สรุป best practices, `CLAUDE.md`, security, ค่าใช้จ่าย, Q&A, แจก self-study (WSL) | `lab/06-wrapup.md`, `self-study/` | |
 
 ## จุดตัดสินใจเรื่องเวลา

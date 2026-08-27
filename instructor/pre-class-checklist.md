@@ -16,7 +16,8 @@
 - [ ] ทดสอบ `ssh myvm "uname -a"` แบบ non-interactive (ไม่ถาม host key/รหัส)
 - [ ] ยืนยัน **ServiceDesk Plus** endpoint + token ใช้ได้ (เตรียมเป็น env var, ไม่ commit)
 - [ ] เตรียม fallback: `scripts/servicedesk-mock/` คัดลอกขึ้น VM แล้ว (`~/servicedesk-mock/`)
-- [ ] ทดสอบ end-to-end: CC ติดตั้ง Postgres → โหลด mock → ติดตั้ง Grafana → เปิดผ่าน `ssh -L 3000` เห็น dashboard
+- [ ] เปิด security group ของแต่ละ VM: inbound TCP 22 (SSH) และ TCP 3000 (Grafana) จากอินเทอร์เน็ต/เน็ตของสถานที่จัดงาน
+- [ ] ทดสอบ end-to-end: CC ติดตั้ง Postgres → โหลด mock → ติดตั้ง Grafana → เปิด `http://<VM_IP>:3000` ตรง ๆ เห็น dashboard (ไม่ต้อง ssh -L แล้ว)
 
 ## Dry-run สุดท้าย
 - [ ] เดินตาม `lab/01` → `lab/06` ด้วยตัวเองครบเส้น จับเวลาว่าพอดีกรอบ 5 ชม.

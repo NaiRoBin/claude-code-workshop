@@ -61,14 +61,16 @@ node ~/servicedesk-mock/mock-server.js &   # เสิร์ฟที่ http://
 แล้วสร้าง dashboard แสดง: จำนวน request ตาม status (bar) และตาม priority (pie)
 ```
 
-เปิดดูผลบน browser Windows ผ่าน **port forward** (ทำใน terminal แยก เพราะ tunnel ค้าง):
-```bash
-ssh -L 3000:localhost:3000 myvm
+เปิดดูผลบน browser Windows ได้ตรง ๆ (ผู้สอนเปิด security group ของ VM ให้แล้ว — พอร์ต 3000
+เข้าถึงจากอินเทอร์เน็ตได้ ไม่ต้องทำ SSH tunnel):
 ```
-แล้วเปิด `http://localhost:3000` (login เริ่มต้น Grafana: admin/admin แล้วเปลี่ยนรหัส)
+http://<VM_PUBLIC_IP>:3000
+```
+(login เริ่มต้น Grafana: admin/admin **ต้องเปลี่ยนรหัสทันที** เพราะพอร์ตนี้เปิดออกสู่อินเทอร์เน็ต)
 
 ### ✅ Checkpoint 3
-เห็น dashboard ใน browser ที่ `http://localhost:3000` แสดงข้อมูลจากตาราง requests
+เห็น dashboard ใน browser ที่ `http://<VM_PUBLIC_IP>:3000` แสดงข้อมูลจากตาราง requests
+และเปลี่ยนรหัส admin ของ Grafana จาก default แล้ว
 
 ---
 

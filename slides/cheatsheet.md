@@ -38,7 +38,7 @@ cp -r /tmp/mp/skills/grilling ~/.claude/skills/grilling
 ## SSH (ใช้ตั้งแต่ lab 02)
 ```bash
 ssh myvm "uname -a"                 # สั่งงานข้าม SSH (ต้อง non-interactive)
-ssh -L 3000:localhost:3000 myvm     # port forward ดู Grafana
+# ดู Grafana: เปิด http://<VM_IP>:3000 ตรง ๆ ได้เลย (security group เปิดพอร์ต 3000 ไว้แล้ว)
 ```
 `~/.ssh/config`:
 ```

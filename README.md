@@ -17,17 +17,17 @@
 (การเปิด WSL ต้องใช้ admin) เราจึงออกแบบดังนี้ (VM เป็น workspace กลางตั้งแต่ lab 02):
 
 ```
-┌────────────────────────┐        SSH         ┌───────────────────────┐
-│  Windows notebook      │  ───────────────▶  │  Linux VM (1 ตัว/คน)  │
-│  (no admin)            │   ssh myvm "..."   │  มี root               │
-│                        │                    │                       │
-│  • Claude Code (native)│                    │  • sample-project      │
-│  • ssh client          │   ssh -L 3000      │    (lab02) / mini-     │
-│  • browser  ◀──────────┼────────────────────┤    project (lab04)    │
-│                        │                    │  • PostgreSQL/Grafana/ │
-│                        │                    │    ServiceDesk Plus    │
-│                        │                    │    หรือ mock (lab05)  │
-└────────────────────────┘                    └───────────────────────┘
+┌────────────────────────┐        SSH (22)     ┌───────────────────────┐
+│  Windows notebook      │  ───────────────▶   │  Linux VM (1 ตัว/คน)  │
+│  (no admin)            │   ssh myvm "..."    │  มี root               │
+│                        │                     │                       │
+│  • Claude Code (native)│                     │  • sample-project      │
+│  • ssh client          │   :3000 (Grafana)   │    (lab02) / mini-     │
+│  • browser  ◀───────────────────────────────┤    project (lab04)    │
+│                        │   (security group   │  • PostgreSQL/Grafana/ │
+│                        │    เปิดพอร์ต 3000   │    ServiceDesk Plus    │
+│                        │    ให้แล้ว)          │    หรือ mock (lab05)  │
+└────────────────────────┘                     └───────────────────────┘
 ```
 
 - **Claude Code รัน native บน Windows** (ติดตั้งแบบ no-admin, ไม่ต้องมี Node/npm) — เส้นทางหลัก

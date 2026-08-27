@@ -8,6 +8,10 @@
 # วิธีใช้:
 #   sudo bash provision-vm.sh "student01 student02 student03"
 #   (พารามิเตอร์ = รายชื่อ user ผู้เรียน คั่นด้วยช่องว่าง)
+#
+# ก่อนรัน: ต้องเปิด inbound TCP 22 (SSH) และ TCP 3000 (Grafana) ใน security group ของ VM
+# เอง (ทำตอน launch instance บน cloud provider เช่น AWS EC2 — ตั้งค่าจากนอก VM สคริปต์นี้
+# ตั้งให้ไม่ได้) lab/05 ให้ผู้เรียนเปิด Grafana ผ่าน `http://<VM_IP>:3000` ตรง ๆ ไม่ใช้ ssh -L
 set -euo pipefail
 
 STUDENTS="${1:-student01}"

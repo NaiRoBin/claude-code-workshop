@@ -14,11 +14,11 @@
 
 ## สถาปัตยกรรม (ย่อ)
 ```
-Windows notebook (Claude Code native)  ──SSH──►  Linux VM (workspace ตั้งแต่ lab 02)
-        │                                             • sample-project (lab 02)
-        │  ssh -L 3000 (ดู Grafana)                    • mini-project (lab 04)
-        └── browser: http://localhost:3000            • PostgreSQL + Grafana +
-                                                          ServiceDesk Plus/mock (lab 05)
+Windows notebook (Claude Code native)  ──SSH (22)──►  Linux VM (workspace ตั้งแต่ lab 02)
+        │                                                  • sample-project (lab 02)
+        │  :3000 (ดู Grafana ตรง ๆ)                        • mini-project (lab 04)
+        └── browser: http://<VM_IP>:3000                  • PostgreSQL + Grafana +
+             (security group เปิดพอร์ต 3000 ไว้แล้ว)         ServiceDesk Plus/mock (lab 05)
 ```
 
 > ทำไมไม่ใช้ WSL: เครื่องไม่มี admin ติดตั้ง WSL สดไม่ได้ — WSL อยู่ในเอกสาร self-study

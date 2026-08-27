@@ -91,10 +91,11 @@ class: lead
 
 ```
 Windows notebook (no admin)            Linux VM (workspace ตั้งแต่ lab 02)
-  • Claude Code (native)   ──SSH──►      • sample-project / mini-project
+  • Claude Code (native)   ──SSH(22)──►   • sample-project / mini-project
   • ssh client                            • PostgreSQL / Grafana
-  • browser ◄──── ssh -L 3000 ────       • ServiceDesk Plus หรือ mock
+  • browser ◄──────── :3000 ─────────    • ServiceDesk Plus หรือ mock
 ```
+(security group ของ VM เปิดพอร์ต 22 กับ 3000 ไว้แล้ว — ดู Grafana เปิด browser ตรง ๆ ได้เลย)
 
 - Claude Code รัน **บน Windows** เป็นหลัก (ไม่ต้องมี admin, ไม่ต้องมี Node/npm)
 - ตั้งแต่ lab 02 เป็นต้นไป: Claude Code **สั่งงานข้าม SSH** ไปทำงานจริงบน VM ตัวเดิม
@@ -352,7 +353,7 @@ ssh myvm "mkdir -p ~/my-mini"
 1. ติดตั้ง **PostgreSQL** + สร้างตาราง `requests`
 2. ดึงข้อมูลจาก **ServiceDesk Plus** (หรือ mock) → โหลดเข้า DB
 3. ติดตั้ง **Grafana** + สร้าง dashboard
-4. เปิดดูผ่าน `ssh -L 3000` บน browser
+4. เปิดดูผ่าน `http://<VM_IP>:3000` บน browser ตรง ๆ (security group เปิดพอร์ต 3000 ไว้แล้ว)
 
 > Claude Code = **agent orchestrate remote Linux**
 
@@ -389,7 +390,7 @@ Host myvm
 node ~/servicedesk-mock/mock-server.js   # http://localhost:8080/requests
 ```
 
-ดู Grafana: `ssh -L 3000:localhost:3000 myvm` → `http://localhost:3000`
+ดู Grafana: เปิด `http://<VM_IP>:3000` ตรง ๆ (ไม่ต้อง ssh -L แล้ว security group เปิดพอร์ต 3000 ไว้แล้ว)
 
 <!-- ทุกคนทำ capstone นี้ต่อเนื่องจาก lab 04 เสมอ ไม่มี branch ให้ข้าม -->
 

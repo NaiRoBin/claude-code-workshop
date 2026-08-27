@@ -26,7 +26,7 @@ Capstone (ServiceDesk Plus/DB/Grafana) เป็น **ส่วนหนึ่�
 | Skills ไม่โผล่ | ลืม reload | `/reload-plugins` หรือเปิด `claude` ใหม่ |
 | SSH (ตั้งแต่ lab01) | ค้างรอ prompt | `StrictHostKeyChecking accept-new` + key-based; เตรียม `~/.ssh/config` ให้พร้อม |
 | ServiceDesk Plus | ล่ม/ช้า | สลับ mock (`scripts/servicedesk-mock/`) ทันที |
-| พอร์ต 3000 ชน | Grafana เปิดไม่ได้ | เปลี่ยนพอร์ต forward |
+| เปิด Grafana ไม่ได้ | security group ยังไม่เปิด inbound 3000 | เช็ค security group ของ VM (ต้องเปิด TCP 22 + 3000) |
 
 ## เตรียมสาธิต use-case ให้ลื่น
 - เตรียมโฟลเดอร์ว่าง + โจทย์ตัวอย่าง (CSV→JSON CLI) ไว้ล่วงหน้า

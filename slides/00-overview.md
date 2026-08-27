@@ -170,23 +170,24 @@ VM ใช้ตั้งแต่ lab 02 (ไม่ใช่แค่ capstone) 
 ## แผนภาพสถาปัตยกรรม
 
 ```
-┌────────────────────────┐        SSH         ┌───────────────────────┐
-│  Windows notebook      │  ───────────────▶  │  Linux VM (1 ตัว/คน)  │
-│  (no admin)            │   ssh myvm "..."   │  มี root               │
-│                        │                    │                       │
-│  • Claude Code (native)│                    │  • sample-project      │
-│  • ssh client          │   ssh -L 3000      │    (lab02) + mini-     │
-│  • browser  ◀──────────┼────────────────────┤    project (lab04)    │
-│                        │                    │  • PostgreSQL/Grafana/ │
-│                        │                    │    ServiceDesk Plus    │
-│                        │                    │    หรือ mock (lab05)  │
-└────────────────────────┘                    └───────────────────────┘
+┌────────────────────────┐        SSH (22)     ┌───────────────────────┐
+│  Windows notebook      │  ───────────────▶   │  Linux VM (1 ตัว/คน)  │
+│  (no admin)            │   ssh myvm "..."    │  มี root               │
+│                        │                     │                       │
+│  • Claude Code (native)│                     │  • sample-project      │
+│  • ssh client          │   :3000 (Grafana)   │    (lab02) + mini-     │
+│  • browser  ◀───────────────────────────────┤    project (lab04)    │
+│                        │                     │  • PostgreSQL/Grafana/ │
+│                        │                     │    ServiceDesk Plus    │
+│                        │                     │    หรือ mock (lab05)  │
+└────────────────────────┘                     └───────────────────────┘
 ```
 
 - Claude Code รัน **native บน Windows** (ติดตั้งแบบ no-admin) — เส้นทางหลัก, laptop ไม่ต้องมี Node/npm เลย
 - ตั้งแต่ **lab 02** เป็นต้นไป Claude Code **สั่งงานข้าม SSH** ไปทำงานจริงบน Linux VM ของผู้เรียน
   (agent orchestrate remote server) — VM ไม่ใช่ของแถมเฉพาะ capstone อีกต่อไป
-- ดู Grafana ผ่าน `ssh -L 3000` แล้วเปิด browser ที่ `http://localhost:3000`
+- ดู Grafana เปิด browser ตรง ๆ ที่ `http://<VM_IP>:3000` (security group ของ VM เปิดพอร์ต 3000
+  ไว้แล้ว ไม่ต้อง ssh -L)
 
 <!--
 เดินอธิบาย diagram ทีละลูกศร: ซ้ายคือเครื่องผู้เรียน (Windows, no admin)
@@ -256,7 +257,7 @@ Claude Code บน Windows เป็นตัวสั่งงานหลั�
 
 - ต่อจาก VM เดิมที่ใช้มาตั้งแต่ lab 02 ให้ Claude Code ติดตั้ง PostgreSQL + Grafana
 - ดึงข้อมูลจาก ServiceDesk Plus (หรือ mock ถ้า staging ไม่พร้อม/ช้า)
-- ดู dashboard ผ่าน `ssh -L 3000` แล้วเปิด browser
+- ดู dashboard เปิด browser ตรง ๆ ที่ `http://<VM_IP>:3000` (security group เปิดพอร์ต 3000 ไว้แล้ว)
 - เป็นส่วนหนึ่งของ flow หลักตอนนี้ — ทุกคนทำต่อจาก lab 04 เข้า lab 05 เสมอ
 
 <!--
@@ -296,7 +297,7 @@ lab 05 รวมเข้า flow หลักแล้ว ไม่ optional �
 |---|---|---|---|
 | 13:30–14:15 | **Skills (หลัก):** skill คืออะไร/ทำไมดี, ติดตั้งจาก GitHub (mattpocock, karpathy) แบบ manual + `/plugin`, เรียกใช้, สร้าง skill เล็กๆ (บน Windows laptop) | `lab/03-skills.md` | ให้ทุกคนติดตั้ง `grilling` แล้วลองใช้ทันที |
 | 14:15–15:30 | **Use case จริง (เน้นมาก):** "เราใช้ Claude Code สร้าง workshop นี้อย่างไร" — สาธิต grill-me → plan → generate files, แล้วให้ผู้เรียนทำ mini-project ด้วย workflow เดียวกันบน VM | `lab/04-use-case-build-workshop.md`, `examples/how-we-built-this.md` | สาธิต ~20 นาที แล้วปล่อยลงมือ ~50 นาที |
-| 15:30–16:15 | **Capstone:** ต่อบน VM เดิม ให้ Claude Code ติดตั้ง Postgres/Grafana + ดึงข้อมูล ServiceDesk Plus (หรือ mock) → dashboard ผ่าน `ssh -L` | `lab/05-capstone.md` | เป็นส่วนหนึ่งของ flow หลัก ทุกคนทำต่อเนื่องจาก lab 04 |
+| 15:30–16:15 | **Capstone:** ต่อบน VM เดิม ให้ Claude Code ติดตั้ง Postgres/Grafana + ดึงข้อมูล ServiceDesk Plus (หรือ mock) → เปิด dashboard ตรง ๆ ที่ `http://<VM_IP>:3000` | `lab/05-capstone.md` | เป็นส่วนหนึ่งของ flow หลัก ทุกคนทำต่อเนื่องจาก lab 04 |
 | 16:15–16:30 | สรุป best practices, `CLAUDE.md`, security, ค่าใช้จ่าย, Q&A, แจก self-study (WSL) | `lab/06-wrapup.md`, `self-study/` | |
 
 <!--

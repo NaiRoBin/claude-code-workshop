@@ -23,9 +23,10 @@
 |---|---|---|
 | ssh ค้าง / Claude Code สั่ง ssh แล้วไม่จบ | ถาม host key หรือถามรหัสผ่าน | ใช้ key-based auth + `StrictHostKeyChecking accept-new` ใน `~/.ssh/config` |
 | `Permission denied (publickey)` | public key ยังไม่อยู่บน VM | แจ้งผู้สอนใส่ public key ลง `authorized_keys` |
-| เปิด Grafana ไม่ได้ | ไม่ได้ทำ port forward | `ssh -L 3000:localhost:3000 myvm` (terminal แยก) แล้วเปิด `http://localhost:3000` |
+| เปิด `http://<VM_IP>:3000` ไม่ได้ (timeout) | security group ยังไม่เปิด inbound 3000 | แจ้งผู้สอนเช็ค security group ของ VM (ต้องเปิด TCP 22 + 3000) |
+| เปิด `http://<VM_IP>:3000` ได้แต่ขึ้น "connection refused" | Grafana ยังไม่ได้ start/ยังติดตั้งไม่เสร็จ | เช็คด้วย `ssh myvm "sudo systemctl status grafana-server"` |
 | ServiceDesk Plus ดึงไม่ได้/ช้า | staging ล่ม/rate limit | สลับไปใช้ mock: `node ~/servicedesk-mock/mock-server.js` |
-| พอร์ต 3000 ถูกใช้แล้ว | มี process ค้าง | เปลี่ยนพอร์ต forward เช่น `ssh -L 3001:localhost:3000 myvm` |
+| กังวลเรื่อง Grafana เปิดออกสู่อินเทอร์เน็ต | พอร์ต 3000 เปิดสู่สาธารณะ ไม่ใช่แค่ localhost | เปลี่ยนรหัส admin จาก default (`admin/admin`) ทันทีหลัง login ครั้งแรก |
 
 ## ทั่วไป
 - Claude ทำผิดทาง → กด Esc หยุด, สั่งใหม่ให้ชัดขึ้น หรือ `/clear` เริ่ม context ใหม่

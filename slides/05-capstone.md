@@ -29,7 +29,7 @@ PostgreSQL + Grafana บน Linux VM แล้วสร้าง dashboard
 0) ทวนว่า ssh ที่ตั้งไว้ตั้งแต่ lab 01 ยัง non-interactive อยู่
 1) ให้ Claude ติดตั้ง postgres บน VM
 2) โหลดข้อมูล ServiceDesk Plus หรือ mock
-3) ติดตั้ง grafana + สร้าง dashboard + ssh -L ดูผล
+3) ติดตั้ง grafana + สร้าง dashboard + เปิดดูผลตรง ๆ ผ่าน public IP:3000
 เน้นว่า Claude Code จะเป็นคนสั่งงานข้าม ssh เอง ผู้เรียนแค่ป้อน prompt
 -->
 
@@ -217,37 +217,33 @@ prompt นี้ครอบคลุมสามงาน: ติดตั้�
 
 ---
 
-## เปิดดูผลผ่าน port forward
+## เปิดดูผลตรง ๆ ผ่าน public IP
 
-เปิดดูผลบน browser Windows ผ่าน **port forward**
-(ทำใน terminal แยก เพราะ tunnel ค้าง):
+ผู้สอนเปิด security group ของ VM ให้แล้ว (inbound พอร์ต 3000) — เปิด browser
+บน Windows แล้วเข้าได้ตรง ๆ ไม่ต้องทำ SSH tunnel:
 
-```bash
-ssh -L 3000:localhost:3000 myvm
+```
+http://<VM_PUBLIC_IP>:3000
 ```
 
-แล้วเปิด `http://localhost:3000`
-(login เริ่มต้น Grafana: admin/admin แล้วเปลี่ยนรหัส)
+(login เริ่มต้น Grafana: admin/admin — **ต้องเปลี่ยนรหัสทันที** เพราะพอร์ตนี้เปิดออกสู่อินเทอร์เน็ต)
 
-> ⚠️ `ssh -L` เป็นคำสั่งที่ค้างอยู่ตลอด (tunnel) — ต้องรันใน terminal แยก
-> ห้ามรันในหน้าต่างเดียวกับที่ใช้สั่ง Claude Code เพราะจะบล็อกไม่ให้ใช้ terminal นั้นต่อ
-
-> ⚠️ ถ้าพอร์ต 3000 บนเครื่อง Windows ถูกใช้อยู่แล้ว (พอร์ตชน) ให้เปลี่ยนเลขพอร์ตซ้าย
-> เช่น `ssh -L 3001:localhost:3000 myvm` แล้วเปิด `http://localhost:3001` แทน
+> ⚠️ พอร์ต 3000 เปิดออกสู่อินเทอร์เน็ตจริง ไม่ใช่แค่ในเครื่อง — ห้ามลืมเปลี่ยนรหัส
+> admin/admin เป็นอย่างอื่นทันทีหลัง login ครั้งแรก
 
 <!--
-สองจุดเตือนสำคัญที่นี่:
-1. ssh -L ค้างเป็น tunnel ต้องมี terminal แยกสำหรับมันโดยเฉพาะ
-2. ถ้า local port 3000 ชนกับโปรแกรมอื่นบนเครื่อง Windows ของผู้เรียน (เช่นมี service อื่น
-   ใช้พอร์ต 3000 อยู่) ให้เปลี่ยนเลขพอร์ตฝั่ง local (ตัวเลขซ้ายของ -L) ได้เลย ไม่ต้องกลัว
+เดิม lab นี้สอน ssh -L port forward แต่ตอนนี้เปลี่ยนมาเปิดพอร์ต 3000 ตรงใน security
+group ของ VM แทน (ผู้สอนเตรียมไว้ล่วงหน้าตอน provision) ทำให้ผู้เรียนไม่ต้องกังวลเรื่อง
+tunnel ค้าง terminal หรือพอร์ต local ชนอีกต่อไป — แต่ต้องย้ำเรื่องเปลี่ยนรหัส Grafana
+เพราะตอนนี้ใครก็เข้าถึง URL นี้ได้ถ้ารู้ IP ไม่ใช่แค่คนที่ ssh เข้าได้เหมือนเดิม
 -->
 
 ---
 
 ## ✅ Checkpoint 3
 
-เห็น dashboard ใน browser ที่ `http://localhost:3000`
-แสดงข้อมูลจากตาราง requests
+เห็น dashboard ใน browser ที่ `http://<VM_PUBLIC_IP>:3000`
+แสดงข้อมูลจากตาราง requests และเปลี่ยนรหัส admin ของ Grafana จาก default แล้ว
 
 <!--
 นี่คือ checkpoint สุดท้ายของ capstone ให้ผู้เรียนโชว์หน้าจอ dashboard จริง ๆ
