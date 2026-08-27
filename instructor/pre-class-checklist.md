@@ -9,8 +9,10 @@
 - [ ] ติดตั้ง skill `grilling`/`tdd` ไว้บนเครื่องสาธิต + ซ้อมสาธิต use-case (grill-me → plan → generate)
 - [ ] เตรียมโจทย์สาธิต + โจทย์ mini-project (ดู `lab/04`)
 - [ ] ปริ๊น/แชร์ลิงก์เอกสาร lab ให้ผู้เรียน
-- [ ] provision VM 1 เครื่อง/คน (แนะนำ 2 vCPU / 4GB, Ubuntu LTS): รัน `scripts/provision-vm.sh "student01 ..."`
+- [ ] provision VM 1 เครื่อง/คน (แนะนำ t3.small ขึ้นไป, Ubuntu LTS): รัน `scripts/provision-vm.sh "student01 ..."`
   — **ต้องทำก่อนวันอบรมเสมอ** เพราะ VM ใช้ตั้งแต่ lab 02 ไม่ใช่แค่ capstone
+  — ถ้า provision บน cloud (เช่น AWS EC2) ใช้ `scripts/aws-user-data.sh` เป็น user-data ตอน
+    launch แต่ละเครื่องได้เลย (แก้ `STUDENT_USER`/`STUDENT_PUBKEY` ก่อนวาง ไม่ต้อง ssh เข้าไปรันมือ)
 - [ ] วาง public key ผู้เรียนใน `scripts/pubkeys/<user>.pub` ก่อนรัน provision (หรือให้ผู้เรียนสร้าง key ตอนเช้าแล้วใส่ทีหลัง)
 - [ ] รัน `scripts/verify-vm.sh` บนแต่ละ VM → ผ่านทุกข้อ (รวม sample-project + servicedesk-mock ที่ provision ไว้)
 - [ ] ทดสอบ `ssh myvm "uname -a"` แบบ non-interactive (ไม่ถาม host key/รหัส)
