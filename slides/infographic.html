@@ -273,20 +273,19 @@ cp -r /tmp/mp/skills/grilling <span class="k">~/.claude/skills/grilling</span>
       </div>
     </div>
     <div>
-      <h2 class="sec"><span class="dot" style="background:var(--basic)"></span>ติดตั้งบน Windows · 3 ก้าว (no-admin)</h2>
+      <h2 class="sec"><span class="dot" style="background:var(--basic)"></span>ติดตั้งบน Windows · 4 ก้าว (no-admin, SSH ทำทีหลังสุด)</h2>
       <div class="install">
 <span class="c"># 1) Claude Code (native install — ไม่ต้องมี Node/npm)</span>
 <span class="k">irm</span> https://claude.ai/install.ps1 <span class="k">| iex</span>
 
-<span class="c"># 2) ต่อ SSH ไป VM (ใช้ตั้งแต่ lab 02)</span>
-<span class="k">ssh-keygen</span> -t ed25519 -C "workshop"
-ssh myvm "uname -a"
-
-<span class="c"># 3) API key (แล้วเปิด terminal ใหม่)</span>
+<span class="c"># 2) API key (แล้วเปิด terminal ใหม่)</span>
 <span class="k">setx</span> ANTHROPIC_API_KEY "sk-ant-xxxx"
 
-<span class="c"># ✅ ตรวจ</span>
+<span class="c"># 3) ทดสอบ local</span>
 claude --version
+
+<span class="c"># 4) ต่อ SSH ไป VM (รอไฟล์ .pem จากผู้สอน — key เดียวกันทั้งคลาส ไม่ต้องสร้างเอง)</span>
+ssh myvm "uname -a"
       </div>
     </div>
   </div>

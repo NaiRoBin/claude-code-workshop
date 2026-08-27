@@ -13,7 +13,7 @@ Capstone (ServiceDesk Plus/DB/Grafana) เป็น **ส่วนหนึ่�
 คละระดับ (dev/non-dev) ≤ 10 คน → ใช้ **checkpoint** ท้ายแต่ละส่วน, จับคู่ dev ช่วย non-dev, เดินช้าตอนติดตั้ง
 
 ## การคุมเวลา (ดู `agenda.md`)
-- เช้า: ติดตั้ง + ต่อ SSH เข้า VM + fundamentals + plan mode
+- เช้า: ติดตั้ง + API key + ทดสอบ local + ต่อ SSH เข้า VM (ทำทีหลังสุดใน lab 01) + fundamentals + plan mode
 - บ่าย: Skills (45') → use case (75') → capstone (45') → wrap-up (15')
 - **ถ้าเวลาไม่พอ:** ย่อความลึกของ Skills (สอน skill เดียวพอ) หรือลดโจทย์ mini-project ของ
   use case แทน — ห้ามตัด capstone เพราะรวมเข้า flow หลักแล้ว
@@ -26,7 +26,7 @@ Capstone (ServiceDesk Plus/DB/Grafana) เป็น **ส่วนหนึ่�
 | Skills ไม่โผล่ | ลืม reload | `/reload-plugins` หรือเปิด `claude` ใหม่ |
 | SSH (ตั้งแต่ lab01) | `Could not resolve hostname myvm` | ผู้เรียนยังไม่แทน `<VM_IP>`/`<student-user>` ใน `~/.ssh/config` ด้วยค่าจริง (ยัง placeholder อยู่) |
 | SSH (ตั้งแต่ lab01) | ค้างรอ prompt | `StrictHostKeyChecking accept-new` + key-based; เตรียม `~/.ssh/config` ให้พร้อม |
-| SSH (ตั้งแต่ lab01) | `Permission denied (publickey)` | pubkey ของผู้เรียนคนนี้ยังไม่ถูกใส่ใน `authorized_keys` บน VM — มักเกิดกับคนที่สร้าง key ตอนเช้าแทนที่จะส่งมาก่อนวันจริง ต้องรับ pubkey แล้ว provision ให้ทันช่วง lab 01 |
+| SSH (ตั้งแต่ lab01) | `Permission denied (publickey)` | ผู้เรียนยังไม่ได้วางไฟล์ `.pem` ที่แจกไว้ (key เดียวกันทุกคน) ที่ `~/.ssh/` หรือ path ใน `IdentityFile` ไม่ตรงกับที่วางจริง |
 | ServiceDesk Plus | ล่ม/ช้า | สลับ mock (`scripts/servicedesk-mock/`) ทันที |
 | เปิด Grafana ไม่ได้ | security group ยังไม่เปิด inbound 3000 | เช็ค security group ของ VM (ต้องเปิด TCP 22 + 3000) |
 

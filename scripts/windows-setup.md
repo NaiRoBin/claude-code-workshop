@@ -13,15 +13,23 @@ claude --version
 curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
-## 2) ต่อ SSH ไป VM
+## 2) API key
 ```powershell
-ssh-keygen -t ed25519 -C "workshop"
+setx ANTHROPIC_API_KEY "sk-ant-xxxxxxxx"
+# ปิด-เปิด terminal ใหม่
 ```
-ส่ง public key ให้ผู้สอน (ไม่ใช่ private key):
+
+## 3) (ทางเลือก) Git for Windows
+ติดตั้งแบบ user-level เพื่อได้ `git` + `ssh` + Git Bash: https://git-scm.com/download/win
+
+## 4) ทดสอบ local
 ```powershell
-type $env:USERPROFILE\.ssh\id_ed25519.pub
+mkdir hello-claude; cd hello-claude; claude
 ```
-รอผู้สอนติดตั้งบน VM แล้วส่ง VM_IP/username กลับมา จากนั้นแก้ไฟล์:
+
+## 5) ต่อ SSH ไป VM (ทำทีหลังสุด — รอไฟล์ key จากผู้สอน)
+ผู้สอนแจก `.pem` **ไฟล์เดียวกันให้ทุกคน** — วางไว้ที่ `~/.ssh/workshop.pem` แล้วรอรับ
+VM_IP/username ของตัวเอง จากนั้นแก้ไฟล์:
 ```powershell
 notepad $env:USERPROFILE\.ssh\config
 ```
@@ -31,27 +39,13 @@ notepad $env:USERPROFILE\.ssh\config
 Host myvm
     HostName <VM_IP>
     User <student-user>
-    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/workshop.pem
     StrictHostKeyChecking accept-new
 ```
 ทดสอบ (ต้องไม่ถาม yes/no หรือรหัสผ่าน):
 ```powershell
 ssh myvm "uname -a"
 ```
-
-## 3) API key
-```powershell
-setx ANTHROPIC_API_KEY "sk-ant-xxxxxxxx"
-# ปิด-เปิด terminal ใหม่
-```
-
-## 4) (ทางเลือก) Git for Windows
-ติดตั้งแบบ user-level เพื่อได้ `git` + `ssh` + Git Bash: https://git-scm.com/download/win
-
-## 5) ทดสอบ
-```powershell
-mkdir hello-claude; cd hello-claude; claude
-```
-แล้วยืนยันว่า `ssh myvm "hostname"` ทำงานได้แบบไม่ถามอะไรเลย — lab ถัดไปทำงานบน VM ผ่าน SSH ทั้งหมด
+lab ถัดไปทำงานบน VM ผ่าน SSH ทั้งหมด
 
 > รายละเอียดเต็ม + checkpoint ดูที่ `../lab/01-windows-setup.md`

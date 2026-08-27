@@ -126,24 +126,31 @@ VM ไม่ใช่ของแถมเฉพาะ capstone อีกต่�
 
 ---
 
-## ขั้นตอนติดตั้ง (3 ก้าว)
+## ขั้นตอนติดตั้ง (4 ก้าว — SSH ทำทีหลังสุด)
 
 ```powershell
 # 1) Claude Code (native install — ไม่ต้อง admin, ไม่ต้องมี Node/npm, อัปเดตตัวเองอัตโนมัติ)
 irm https://claude.ai/install.ps1 | iex
+claude --version
 
-# 2) ต่อ SSH ไป VM ให้ non-interactive (ใช้ตั้งแต่ lab 02)
-ssh-keygen -t ed25519 -C "workshop"
-# ตั้ง ~/.ssh/config ให้มี Host myvm ... StrictHostKeyChecking accept-new
-ssh myvm "uname -a"      # ต้องได้ผลทันที ไม่ถาม yes/no ไม่ถามรหัส
-
-# 3) API key
+# 2) API key
 setx ANTHROPIC_API_KEY "sk-ant-xxxx"   # เปิด terminal ใหม่
+
+# 3) ทดสอบ local
+mkdir hello-claude; cd hello-claude; claude
+# แล้วพิมพ์: สร้างไฟล์ hello.txt ที่มีข้อความ "สวัสดี Claude Code"
+
+# 4) ต่อ SSH ไป VM (รอไฟล์ .pem จากผู้สอนก่อน — ทั้งคลาสใช้ key เดียวกัน ไม่ต้องสร้างเอง)
+# วาง .pem ที่ ~/.ssh/workshop.pem แล้วตั้ง ~/.ssh/config ให้มี Host myvm ... IdentityFile
+# ~/.ssh/workshop.pem ... StrictHostKeyChecking accept-new
+ssh myvm "uname -a"      # ต้องได้ผลทันที ไม่ถาม yes/no ไม่ถามรหัส
 ```
 
 <!--
 เดินช้า ๆ ตรงนี้ รอทุกคน. ถ้า irm ไม่รู้จัก แสดงว่าอยู่ใน CMD ไม่ใช่ PowerShell → ใช้ install.cmd แทน (ดู lab 01).
 SSH ต้อง non-interactive จริง ๆ เพราะ lab 02 เป็นต้นไปทุก lab สั่งงานผ่าน ssh myvm ทั้งหมด
+ย้ำว่า SSH ทำทีหลังสุดเพราะต้องรอไฟล์ .pem ที่ผู้สอนแจก (key เดียวกันทั้งคลาส) — ไม่ต้องให้
+ผู้เรียนสร้าง/ส่ง key เอง ทำ 3 ก้าวแรกให้เสร็จก่อนได้เลยแม้ยังไม่ได้ไฟล์ key
 -->
 
 ---
@@ -152,10 +159,7 @@ SSH ต้อง non-interactive จริง ๆ เพราะ lab 02 เป�
 
 ```powershell
 claude --version           # เห็นเวอร์ชัน Claude Code
-ssh myvm "hostname"        # ไม่ถามอะไรเลย
-
-mkdir hello-claude; cd hello-claude; claude
-# แล้วพิมพ์: สร้างไฟล์ hello.txt ที่มีข้อความ "สวัสดี Claude Code"
+ssh myvm "hostname"        # ไม่ถามอะไรเลย (หลังได้ไฟล์ .pem แล้ว)
 ```
 
 > ⚠️ ลง Claude Code บน Windows ไม่ได้จริง ๆ? → **Fallback A**: ssh เข้า VM แล้วลง Claude Code
@@ -368,7 +372,7 @@ Claude สั่งงานผ่าน `ssh myvm "..."` → ต้อง **non
 Host myvm
     HostName <VM_IP>
     User <student-user>
-    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/workshop.pem   # key เดียวกันทั้งคลาส (ตั้งไว้แล้วใน lab 01)
     StrictHostKeyChecking accept-new
 ```
 ทดสอบ: `ssh myvm "uname -a"` ต้องได้ผลทันที ไม่ถามอะไร

@@ -21,9 +21,9 @@
 
 | อาการ | สาเหตุ | วิธีแก้ |
 |---|---|---|
-| `Could not resolve hostname myvm` | ไม่มี `Host myvm` ใน `~/.ssh/config` จริง (ไฟล์ไม่มีเลย/พิมพ์ผิด/ยังเป็น placeholder `<VM_IP>`) | เปิด `notepad $env:USERPROFILE\.ssh\config` เช็คว่ามี block `Host myvm` และแทนที่ `<VM_IP>`/`<student-user>` ด้วยค่าจริงแล้ว (ดู lab 01 ขั้นที่ 4) |
+| `Could not resolve hostname myvm` | ไม่มี `Host myvm` ใน `~/.ssh/config` จริง (ไฟล์ไม่มีเลย/พิมพ์ผิด/ยังเป็น placeholder `<VM_IP>`) | เปิด `notepad $env:USERPROFILE\.ssh\config` เช็คว่ามี block `Host myvm` และแทนที่ `<VM_IP>`/`<student-user>` ด้วยค่าจริงแล้ว (ดู lab 01 ขั้นที่ 4 หัวข้อ SSH, sub-step 3) |
 | ssh ค้าง / Claude Code สั่ง ssh แล้วไม่จบ | ถาม host key หรือถามรหัสผ่าน | ใช้ key-based auth + `StrictHostKeyChecking accept-new` ใน `~/.ssh/config` |
-| `Permission denied (publickey)` | public key ยังไม่อยู่บน VM (ยังไม่ได้ส่งให้ผู้สอน หรือผู้สอนยังไม่ได้ provision) | เช็คว่าส่ง `id_ed25519.pub` (ไม่ใช่ตัวไม่มี `.pub`) ให้ผู้สอนแล้ว และแจ้งผู้สอนใส่ลง `authorized_keys` |
+| `Permission denied (publickey)` | ไฟล์ `.pem` ที่ผู้สอนแจก (key เดียวกันทุกคน) ยังไม่ได้วางไว้ที่ `~/.ssh/` หรือ path ใน `IdentityFile` ไม่ตรงกับที่วางไว้จริง | เช็คว่าไฟล์ `.pem` อยู่ที่ path เดียวกับที่ตั้งใน `IdentityFile` ของ `~/.ssh/config` |
 | เปิด `http://<VM_IP>:3000` ไม่ได้ (timeout) | security group ยังไม่เปิด inbound 3000 | แจ้งผู้สอนเช็ค security group ของ VM (ต้องเปิด TCP 22 + 3000) |
 | เปิด `http://<VM_IP>:3000` ได้แต่ขึ้น "connection refused" | Grafana ยังไม่ได้ start/ยังติดตั้งไม่เสร็จ | เช็คด้วย `ssh myvm "sudo systemctl status grafana-server"` |
 | ServiceDesk Plus ดึงไม่ได้/ช้า | staging ล่ม/rate limit | สลับไปใช้ mock: `node ~/servicedesk-mock/mock-server.js` |

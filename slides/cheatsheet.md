@@ -45,7 +45,7 @@ ssh myvm "uname -a"                 # สั่งงานข้าม SSH (ต
 Host myvm
     HostName <IP>
     User <user>
-    IdentityFile ~/.ssh/id_ed25519
+    IdentityFile ~/.ssh/workshop.pem   # key เดียวกันทั้งคลาส (ผู้สอนแจกให้)
     StrictHostKeyChecking accept-new
 ```
 

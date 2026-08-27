@@ -278,7 +278,7 @@ lab 05 รวมเข้า flow หลักแล้ว ไม่ optional �
 | เวลา | หัวข้อ | ไฟล์อ้างอิง | หมายเหตุผู้สอน |
 |---|---|---|---|
 | 10:00–10:20 | บทนำ: Claude Code คืออะไร, use case, โมเดล, ค่าใช้จ่าย & ความปลอดภัยเบื้องต้น | `slides/slides.md` | ปูภาพรวมทั้งวัน |
-| 10:20–10:55 | ติดตั้งบน Windows (no-admin): Claude Code (native install) → ต่อ SSH เข้า VM → `ANTHROPIC_API_KEY` → `claude` ครั้งแรก | `lab/01-windows-setup.md` | แจก API key ตรงนี้ · เดินช้าๆ · คนติดปัญหา → fallback A |
+| 10:20–10:55 | ติดตั้งบน Windows (no-admin): Claude Code (native install) → `ANTHROPIC_API_KEY` → `claude` ครั้งแรก → ต่อ SSH เข้า VM (ทีหลังสุด รอไฟล์ key จากผู้สอน) | `lab/01-windows-setup.md` | แจก API key + ไฟล์ SSH key (ตัวเดียวกันทั้งคลาส) ตรงนี้ · เดินช้าๆ · คนติดปัญหา → fallback A |
 | 10:55–11:35 | Fundamentals บนโปรเจกต์ตัวอย่าง (บน VM ผ่าน SSH): prompting, แก้ไฟล์, รันคำสั่ง, `/commands`, permission, git | `lab/02-claude-code-basics.md`, `sample-project/` (provision ไว้บน VM แล้ว) | ให้ลงมือทำจริงทุกคน มี checkpoint |
 | 11:35–12:00 | Plan mode & workflow (ปูทางช่วงบ่าย): plan/ExitPlanMode, การให้ context, `CLAUDE.md` | `lab/02-claude-code-basics.md` §Plan | เชื่อมเข้า use-case ตอนบ่าย |
 

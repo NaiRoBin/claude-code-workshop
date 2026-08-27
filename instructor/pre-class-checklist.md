@@ -9,13 +9,20 @@
 - [ ] ติดตั้ง skill `grilling`/`tdd` ไว้บนเครื่องสาธิต + ซ้อมสาธิต use-case (grill-me → plan → generate)
 - [ ] เตรียมโจทย์สาธิต + โจทย์ mini-project (ดู `lab/04`)
 - [ ] ปริ๊น/แชร์ลิงก์เอกสาร lab ให้ผู้เรียน
-- [ ] provision VM 1 เครื่อง/คน (แนะนำ t3.small ขึ้นไป, Ubuntu LTS): รัน `scripts/provision-vm.sh "student01 ..."`
-  — **ต้องทำก่อนวันอบรมเสมอ** เพราะ VM ใช้ตั้งแต่ lab 02 ไม่ใช่แค่ capstone
+- [ ] สร้าง **SSH key เดียว** ใช้ร่วมกันทั้งคลาส (เช่น EC2 key pair ตัวเดียวใน AWS หรือ
+  `ssh-keygen` ทั่วไป 1 คู่) — **ทุกคนใช้ key ไฟล์เดียวกัน** ไม่ต้องให้ผู้เรียนสร้าง/ส่ง pubkey เอง
+  (trade-off: ทุกคนถือ private key เดียวกัน ssh เข้า VM ของคนอื่นได้ด้วย — ยอมรับได้สำหรับ
+  workshop วันเดียว)
+- [ ] provision VM 1 เครื่อง/คน (แนะนำ t3.small ขึ้นไป, Ubuntu LTS): ใส่ **public key ตัวเดียว
+  กันซ้ำ** ลง `scripts/pubkeys/<user>.pub` ของทุก username (เนื้อหาไฟล์เหมือนกันหมด) แล้วรัน
+  `scripts/provision-vm.sh "student01 ..."` — **ต้องทำก่อนวันอบรมเสมอ** เพราะ VM ใช้ตั้งแต่
+  lab 02 ไม่ใช่แค่ capstone
   — ถ้า provision บน cloud (เช่น AWS EC2) ใช้ `scripts/aws-user-data.sh` เป็น user-data ตอน
-    launch แต่ละเครื่องได้เลย (แก้ `STUDENT_USER`/`STUDENT_PUBKEY` ก่อนวาง ไม่ต้อง ssh เข้าไปรันมือ)
-- [ ] วาง public key ผู้เรียนใน `scripts/pubkeys/<user>.pub` ก่อนรัน provision (หรือให้ผู้เรียนสร้าง key ตอนเช้าแล้วใส่ทีหลัง)
-  — ถ้าใช้แบบหลัง: เตรียมช่องทางรับ pubkey หน้างาน (เช่นแชทกลุ่ม) แล้ว provision +
-    ส่ง VM_IP/username กลับให้ทันช่วง lab 01 ขั้นตอน SSH (ผู้เรียนรอ 2 ค่านี้ก่อนตั้ง `~/.ssh/config` ได้)
+    launch แต่ละเครื่องได้เลย (`STUDENT_PUBKEY` จะเหมือนกันทุกเครื่อง แก้แค่ `STUDENT_USER`
+    ก่อนวางแต่ละครั้ง ไม่ต้อง ssh เข้าไปรันมือ)
+- [ ] เตรียมไฟล์ `.pem`/private key ตัวเดียวกันไว้แจกผู้เรียนทุกคนตอนเริ่มคลาส (เช่น ลิงก์ดาวน์โหลด
+  หรือแชทกลุ่ม) — แจกได้ตั้งแต่ต้นคลาส เพราะผู้เรียนใช้จริงตอนหลังสุดของ lab 01 (ขั้นที่ 4)
+- [ ] เตรียมรายชื่อ VM_IP + username ต่อคน (ค่านี้ต่างกันทุกคน) ไว้แจกพร้อมกับไฟล์ `.pem`
 - [ ] รัน `scripts/verify-vm.sh` บนแต่ละ VM → ผ่านทุกข้อ (รวม sample-project + servicedesk-mock ที่ provision ไว้)
 - [ ] ทดสอบ `ssh myvm "uname -a"` แบบ non-interactive (ไม่ถาม host key/รหัส)
 - [ ] ยืนยัน **ServiceDesk Plus** endpoint + token ใช้ได้ (เตรียมเป็น env var, ไม่ commit)
