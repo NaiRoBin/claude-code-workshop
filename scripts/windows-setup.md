@@ -13,15 +13,14 @@ node -v; npm -v
 ```
 ถ้าไม่มี `winget`: โหลด `fnm.exe` จาก https://github.com/Schniz/fnm/releases วางในโฟลเดอร์ที่อยู่ใน PATH ของ user
 
-## 2) Claude Code
+## 2) Claude Code (native install)
 ```powershell
-npm install -g @anthropic-ai/claude-code
+irm https://claude.ai/install.ps1 | iex
 claude --version
 ```
-ถ้าติด permission:
-```powershell
-npm config set prefix "$env:USERPROFILE\.npm-global"
-# เพิ่ม %USERPROFILE%\.npm-global ลง PATH ของ user (Environment Variables ของ user)
+ถ้า `irm` ไม่รู้จัก (อยู่ใน CMD ไม่ใช่ PowerShell):
+```bat
+curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 ```
 
 ## 3) API key

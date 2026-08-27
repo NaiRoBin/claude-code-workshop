@@ -5,7 +5,8 @@
 | อาการ | สาเหตุ | วิธีแก้ |
 |---|---|---|
 | `node` / `npm` ไม่รู้จัก | fnm ยังไม่ได้ activate ใน session | รัน `fnm env --use-on-cd \| Out-String \| Invoke-Expression` แล้ว `fnm use lts-latest`; เปิด terminal ใหม่ |
-| `npm i -g` ขึ้น permission error | prefix ชี้ path ที่ต้อง admin | `npm config set prefix "$env:USERPROFILE\.npm-global"` แล้วเพิ่มลง PATH ของ user |
+| `irm` ไม่รู้จัก (`is not recognized`) | อยู่ใน CMD ไม่ใช่ PowerShell | ใช้ `curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd` แทน |
+| ติดตั้ง native install แล้วยังหา `claude` ไม่เจอ | PATH ยังไม่ถูก apply ใน session นี้ | ปิด-เปิด terminal ใหม่ |
 | `winget` ไม่มี | เครื่องเก่า/ถูกปิด | โหลด `fnm.exe` จาก GitHub releases วางในโฟลเดอร์ที่อยู่ใน PATH ของ user |
 | `claude` ขึ้น auth error | ยังไม่ตั้ง/ตั้งผิด `ANTHROPIC_API_KEY` | `setx ANTHROPIC_API_KEY "sk-ant-..."` แล้วเปิด terminal ใหม่ |
 | ลงบน Windows ไม่ได้จริง ๆ | policy เครื่อง | **Fallback A**: `ssh myvm` เข้าไปรัน `claude` บน VM แทน |

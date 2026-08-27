@@ -32,8 +32,9 @@ node -v
 ```
 
 ### 3) ติดตั้ง Claude Code + auth
+วิธีที่แนะนำตอนนี้คือ native install (ไม่ผ่าน npm) — อัปเดตตัวเองอัตโนมัติด้วย:
 ```bash
-npm install -g @anthropic-ai/claude-code
+curl -fsSL https://claude.ai/install.sh | bash
 export ANTHROPIC_API_KEY="sk-ant-xxxx"   # เพิ่มลง ~/.bashrc ให้ถาวร
 claude --version
 ```

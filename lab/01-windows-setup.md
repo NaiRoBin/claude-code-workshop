@@ -39,16 +39,25 @@ npm -v
 
 ---
 
-## 2. ติดตั้ง Claude Code
+## 2. ติดตั้ง Claude Code (native install)
+
+วิธีที่ทางการแนะนำตอนนี้คือ **native install** (ไม่ใช่ผ่าน npm แล้ว) — ลงแบบ user-level ไม่ต้อง admin และอัปเดตตัวเองอัตโนมัติ
+
 ```powershell
-npm install -g @anthropic-ai/claude-code
+irm https://claude.ai/install.ps1 | iex
 ```
-> หมายเหตุผู้สอน: ยืนยันชื่อแพ็กเกจ/วิธีติดตั้งล่าสุด ณ วันอบรมอีกครั้ง (อาจมี native installer)
-> ถ้า `npm i -g` ติดปัญหา permission ให้ตั้ง npm prefix เป็นโฟลเดอร์ใน user:
-> ```powershell
-> npm config set prefix "$env:USERPROFILE\.npm-global"
-> # แล้วเพิ่ม %USERPROFILE%\.npm-global ใน PATH ของ user
+
+> ถ้าเจอ error `'irm' is not recognized` แสดงว่าอยู่ใน CMD ไม่ใช่ PowerShell — ให้ใช้:
+> ```bat
+> curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
 > ```
+>
+> ทางเลือกอื่น (ไม่ auto-update, ต้องรัน `winget upgrade Anthropic.ClaudeCode` เองเป็นระยะ):
+> ```powershell
+> winget install Anthropic.ClaudeCode
+> ```
+>
+> อ้างอิง: https://code.claude.com/docs/en/quickstart#native-install-recommended
 
 ### ✅ Checkpoint 2
 ```powershell

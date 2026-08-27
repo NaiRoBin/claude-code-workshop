@@ -279,8 +279,8 @@ cp -r /tmp/mp/skills/grilling <span class="k">~/.claude/skills/grilling</span>
 <span class="k">winget install</span> Schniz.fnm
 fnm install --lts ; fnm use lts-latest
 
-<span class="c"># 2) Claude Code</span>
-<span class="k">npm install -g</span> @anthropic-ai/claude-code
+<span class="c"># 2) Claude Code (native install)</span>
+<span class="k">irm</span> https://claude.ai/install.ps1 <span class="k">| iex</span>
 
 <span class="c"># 3) API key (แล้วเปิด terminal ใหม่)</span>
 <span class="k">setx</span> ANTHROPIC_API_KEY "sk-ant-xxxx"
